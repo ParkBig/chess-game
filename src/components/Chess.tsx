@@ -3,14 +3,12 @@ import { socket } from "./socketIo";
 import styled from "styled-components";
 import BoardBlock from "./BoardBlock";
 import { useBoardList, useUserState } from "../store/configureStore";
-import { Player } from "../types/interface";
+import { AnimatePresence } from "framer-motion";
 
 const Chess = () => {
   const board = useBoardList(state => state.board);
   const chessMove = useBoardList(state => state.chessMove);
   const setIsBlockPick = useBoardList(state => state.setIsBlockPick);
-  const im = useUserState(state => state.im);
-  const nowTurn = useUserState(state => state.nowTurn);
   const setNowTurn = useUserState(state => state.setNowTurn);
   
   useEffect(() => {
@@ -25,12 +23,15 @@ const Chess = () => {
   }, []);
   return (
     <Wrap>
-      {board.map((boardBlock, index) =>
-        <BoardBlock key={`${boardBlock.col}-${boardBlock.row}`} 
-          boardBlock={boardBlock}
-          index={index}
-        />
-      )}
+      <AnimatePresence>
+        {board.map((boardBlock, index) =>
+          <BoardBlock key={`${boardBlock.col}-${boardBlock.row}`} 
+            boardBlock={boardBlock}
+            index={index}
+          />
+        )}
+
+      </AnimatePresence>
     </Wrap>
   )
 }

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from 'zustand/middleware/immer'
-import { Board, UseBoardList, UseUserState } from "../types/interface";
+import { Board, UseBoardList, UseTraceMoveArea, UseUserState } from "../types/interface";
 
 export const useBoardList = create(
   immer<UseBoardList>((set) => ({
@@ -55,4 +55,10 @@ export const useUserState = create<UseUserState>(set => ({
     nowTurn: state.nowTurn === "player-1" ? "player-2" : "player-1"
   })),
 }));
-  
+
+export const useTraceMoveArea = create<UseTraceMoveArea>(set => ({
+  canMoveArea: [],
+  setCanMoveArea: (siftAndCanMove) => set(state => ({
+    canMoveArea: siftAndCanMove
+  }))
+}))

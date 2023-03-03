@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
@@ -11,7 +10,7 @@ const Match = () => {
   const enterTheRoom = () => {
     const { roomName } = getValues();
     socket.emit("enterRoom", roomName, ()=>{navigate(`room/${roomName}`)})
-  }
+  };
 
   return (
     <Wrap>

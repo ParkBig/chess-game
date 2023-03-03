@@ -26,10 +26,9 @@ const countRoomParticipant = (roomName) => {
 wsServer.on("connection", (socket) => {
   socket.onAny((ev) => { console.log(ev) });
 
-  socket.on("enterRoom", (roomName, done) => {
+  socket.on("enterRoom", (roomName, goToRoom) => {
     socket.join(roomName);
-    done();
-    socket.to(roomName).emit("welcome", socket.nickName, roomName);
+    goToRoom();
   });
 
   socket.on("send_msg", (get) => {
@@ -51,6 +50,4 @@ wsServer.on("connection", (socket) => {
     setIsBlockPick(get.pickedIndex);
     socket.to(get.roomName).emit("picked-index", get.pickedIndex);
   });
-})
-
-// "boardSetting" 받아주고 세팅해주면서 닉네임도 플레이어 원 or 투로 변경해준다
+});

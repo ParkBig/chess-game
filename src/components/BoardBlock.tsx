@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BoardsBlock } from "../types/interface";
-import { useBoardList, useUserState } from "../store/configureStore";
+import { useBoardList, useTraceMoveArea, useUserState } from "../store/configureStore";
 
 import whiteBishop from "../assets/png/white-bishop.png";
 import whiteKing from "../assets/png/white-king.png";
@@ -18,18 +18,23 @@ import blackQueen from "../assets/png/black-queen.png";
 import blackRook from "../assets/png/black-rook.png";
 import { socket } from "./socketIo";
 import { useParams } from "react-router-dom";
+import siftChessmenToMove from "../hooks/siftChessmenToMove";
 
 const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
   const { roomName } = useParams();
+  const board = useBoardList(state => state.board);
   const isBlockPick = useBoardList(state => state.isBlockPick);
   const im = useUserState(state => state.im);
   const nowTurn = useUserState(state => state.nowTurn);
+  const canMoveArea = useTraceMoveArea(state => state.canMoveArea);
   const setIsBlockPick = useBoardList(state => state.setIsBlockPick);
   const chessMove = useBoardList(state => state.chessMove);
   const setNowTurn = useUserState(state => state.setNowTurn);
+  const setCanMoveArea = useTraceMoveArea(state => state.setCanMoveArea);
 
   const blockPick = () => {
     if (im === nowTurn) {
+      setCanMoveArea(siftChessmenToMove(index, board));
       socket.emit("block-pick", { roomName, pickedIndex: index }, setIsBlockPick);
     }
   };
@@ -39,11 +44,15 @@ const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
   };
   return (
     <Area isColor={boardBlock.color}>
+      {isBlockPick.isPick && canMoveArea.includes(index) && im === nowTurn ?
+        <CanMoveArea onClick={moveTo}></CanMoveArea>
+        :
+        null
+      }
       {boardBlock.chessmenType ?
         <ChessmenImg
           variants={variants}
           whileHover="hover"
-          whileTap="click"
           onClick={blockPick}
           $myChess={boardBlock.isMyChessmen}
           src={
@@ -69,16 +78,7 @@ const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
           }
         />
         :
-        <>
-          {isBlockPick.isPick ?
-            <CanMoveArea onClick={moveTo}>
-
-            </CanMoveArea>
-            :
-            null
-          }
-        </>
-        
+        null
       }
     </Area>
   )
@@ -100,7 +100,7 @@ const Area = styled.div<{isColor: boolean}>`
 const ChessmenImg = styled(motion.img)<{$myChess: boolean | null}>`
   width: 64px;
   height: 64px;
-  position: relative;
+  position: absolute;
   z-index: 200;
   pointer-events: ${prop => prop.$myChess ? null : "none"};
   cursor: pointer;
@@ -110,6 +110,9 @@ const CanMoveArea = styled.div`
   height: 100px;
   border-radius: 50px;
   background-color: tomato;
+  position: absolute;
+  z-index: 300;
+  opacity: 0.5;
 `;
 
 
@@ -118,10 +121,10 @@ const variants = {
     // y: -10,
     scale: 1.2
   },
-  click: (isChessClick: boolean) => ({
-    y: isChessClick ? -10 : 0,
-    scale: isChessClick ? 1.2 : 1
-  })
+  // click: (isChessClick: boolean) => ({
+  //   y: isChessClick ? -10 : 0,
+  //   scale: isChessClick ? 1.2 : 1
+  // })
 }
 
 // 프레이머 모션 레이아웃아이디 버그 발견한거 같음.

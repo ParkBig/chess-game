@@ -33,6 +33,11 @@ export interface UseUserState {
   setNowTurn: () => void;
 }
 
+export interface UseTraceMoveArea {
+  canMoveArea: number[];
+  setCanMoveArea: (siftAndCanMove: number[]) => void;
+}
+
 export type Player = "player-1" | "player-2";
 
 export type ChessColor = "black" | "white" | null;;
