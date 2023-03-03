@@ -1,6 +1,6 @@
 export interface Board {
   row: number;
-  col: string;
+  col: Column | string;
   color: boolean;
   chessmenType: Chessmen;
   isMyChessmen: boolean | null;
@@ -40,9 +40,11 @@ export interface UseTraceMoveArea {
 
 export type Player = "player-1" | "player-2";
 
-export type ChessColor = "black" | "white" | null;;
+export type ChessColor = "black" | "white" | null;
 
 export type Chessmen = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn" | null;
+
+export type Column = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
 
 type IsBlockPick = {
   isPick: boolean;

@@ -1,9 +1,12 @@
-import { Board } from "../types/interface";
+import { Board, Column } from "../types/interface";
+import stringColToNum from "./stringColToNum";
 
 const siftChessmenToMove = (pickedIndex: number, board: Board[]) => {
   const canMoveArea = [];
   const pickedBlock = board[pickedIndex];
+  const changeColToNumber = stringColToNum(board[pickedIndex].col);
 
+  // pawn movement
   if (pickedBlock.chessmenType === "pawn") {
     if (pickedBlock.chessColor === "white") {
       if (!board[pickedIndex -8].chessmenType) {
@@ -61,6 +64,93 @@ const siftChessmenToMove = (pickedIndex: number, board: Board[]) => {
     }
   };
 
+  // rook movement
+  if (pickedBlock.chessmenType === "rook") {
+    if (pickedBlock.chessColor === "white") {
+      for (let i = 1; i < board[pickedIndex].row; i++) {
+        if (!board[pickedIndex - 8*i].chessmenType || board[pickedIndex - 8*i].chessColor === "black") {
+          if (board[pickedIndex - 8*i + 8].chessColor === "black") {
+            break;
+          }
+          canMoveArea.push(pickedIndex - 8*i);
+        } else {
+          break;
+        }
+      }
+      for (let i = 1; i < 9 - board[pickedIndex].row; i++) {
+        if (!board[pickedIndex + 8*i].chessmenType || board[pickedIndex + 8*i].chessColor === "black") {
+          if (board[pickedIndex + 8*i - 8].chessColor === "black") {
+            break;
+          }
+          canMoveArea.push(pickedIndex + 8*i);
+        } else {
+          break;
+        }
+      }
+      for (let i = 1; i < changeColToNumber[0]; i++) {
+        if (!board[pickedIndex - i].chessmenType || board[pickedIndex - i].chessColor === "black") {
+          if (board[pickedIndex - i + 1].chessColor === "black") {
+            break;
+          }
+          canMoveArea.push(pickedIndex - i);
+        } else {
+          break;
+        }
+      }
+      for (let i = 1; i < 9 - changeColToNumber[0]; i++) {
+        if (!board[pickedIndex + i].chessmenType || board[pickedIndex + i].chessColor === "black") {
+          if (board[pickedIndex + i - 1].chessColor === "black") {
+            break;
+          }
+          canMoveArea.push(pickedIndex + i);
+        } else {
+          break;
+        }
+      }
+    };
+    if (pickedBlock.chessColor === "black") {
+      for (let i = 1; i < 9 - board[pickedIndex].row; i++) {
+        if (!board[pickedIndex + 8*i].chessmenType || board[pickedIndex + 8*i].chessColor === "white") {
+          if (board[pickedIndex + 8*i - 8].chessColor === "white") {
+            break;
+          }
+          canMoveArea.push(pickedIndex + 8*i);
+        } else {
+          break;
+        }
+      }
+      for (let i = 1; i < board[pickedIndex].row; i++) {
+        if (!board[pickedIndex - 8*i].chessmenType || board[pickedIndex - 8*i].chessColor === "white") {
+          if (board[pickedIndex - 8*i + 8].chessColor === "white") {
+            break;
+          }
+          canMoveArea.push(pickedIndex - 8*i);
+        } else {
+          break;
+        }
+      }
+      for (let i = 1; i < 9 - changeColToNumber[0]; i++) {
+        if (!board[pickedIndex + i].chessmenType || board[pickedIndex + i].chessColor === "white") {
+          if (board[pickedIndex + i - 1].chessColor === "white") {
+            break;
+          }
+          canMoveArea.push(pickedIndex + i);
+        } else {
+          break;
+        }
+      }
+      for (let i = 1; i < changeColToNumber[0]; i++) {
+        if (!board[pickedIndex - i].chessmenType || board[pickedIndex - i].chessColor === "white") {
+          if (board[pickedIndex - i + 1].chessColor === "white") {
+            break;
+          }
+          canMoveArea.push(pickedIndex - i);
+        } else {
+          break;
+        }
+      }
+    }
+  }
 
   return canMoveArea;
 };

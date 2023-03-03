@@ -61,4 +61,4 @@ export const useTraceMoveArea = create<UseTraceMoveArea>(set => ({
   setCanMoveArea: (siftAndCanMove) => set(state => ({
     canMoveArea: siftAndCanMove
   }))
-}))
+}));
