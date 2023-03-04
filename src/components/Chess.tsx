@@ -11,7 +11,7 @@ const Chess = () => {
   const setIsBlockPick = useBoardList(state => state.setIsBlockPick);
   const setNowTurn = useUserState(state => state.setNowTurn);
   
-  // test
+  // test and delete
   const canMoveArea = useTraceMoveArea(state => state.canMoveArea);
   console.log(canMoveArea)
   // console.log(board)

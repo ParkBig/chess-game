@@ -20,7 +20,7 @@ const boardList = (player: Player) => {
         return false;
       };
       return null;
-    }
+    };
   };
 
   const setChessmen = (i: number, j: number): Chessmen => {
@@ -48,10 +48,10 @@ const boardList = (player: Player) => {
   const setChessColor = (i: number): ChessColor => {
     if (i === 0 || i === 1) {
       return "black";
-    }
+    };
     if (i === 6 || i === 7 ) {
       return "white";
-    }
+    };
     return null;
   };
   
@@ -67,10 +67,10 @@ const boardList = (player: Player) => {
         chessmenType: setChessmen(i, j),
         chessColor: setChessColor(i),
       });
-    }
+    };
   };
 
   return board;
-}
+};
 
 export default boardList;
