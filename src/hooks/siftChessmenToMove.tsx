@@ -203,6 +203,94 @@ const siftChessmenToMove = (pickedIndex: number, board: Board[]) => {
       }
     }
   }
+  
+  // bishop movement
+  if (pickedBlock.chessmenType === "bishop") {
+    if (pickedBlock.chessColor === "white") {
+      for (let i = 1; i < board[pickedIndex].row; i++) {
+        if (!board[pickedIndex - (8 * i) - i]?.chessmenType || board[pickedIndex - (8 * i) - i]?.chessColor === "black") {
+          if (board[pickedIndex]?.row - i === board[pickedIndex - (8 * i) - i]?.row) {
+            canMoveArea.push(pickedIndex - (8 * i) - i);
+          }
+        }
+        if (board[pickedIndex - (8 * i) - i]?.chessmenType) {
+          break;
+        };
+      }
+      for (let i = 1; i < board[pickedIndex].row; i++) {
+        if (!board[pickedIndex - (8 * i) + i]?.chessmenType || board[pickedIndex - (8 * i) + i]?.chessColor === "black") {
+          if (board[pickedIndex]?.row - i === board[pickedIndex - (8 * i) + i]?.row) {
+            canMoveArea.push(pickedIndex - (8 * i) + i);
+          }
+        }
+        if (board[pickedIndex - (8 * i) + i]?.chessmenType) {
+          break;
+        };
+      }
+      for (let i = 1; i < 9 - board[pickedIndex].row; i++) {
+        if (!board[pickedIndex + (8 * i) - i]?.chessmenType || board[pickedIndex + (8 * i) - i]?.chessColor === "black") {
+          if (board[pickedIndex]?.row + i === board[pickedIndex + (8 * i) - i]?.row) {
+            canMoveArea.push(pickedIndex + (8 * i) - i);
+          }
+        }
+        if (board[pickedIndex + (8 * i) - i]?.chessmenType) {
+          break;
+        };
+      }
+      for (let i = 1; i < 9 - board[pickedIndex].row; i++) {
+        if (!board[pickedIndex + (8 * i) + i]?.chessmenType || board[pickedIndex + (8 * i) + i]?.chessColor === "black") {
+          if (board[pickedIndex]?.row + i === board[pickedIndex + (8 * i) + i]?.row) {
+            canMoveArea.push(pickedIndex + (8 * i) + i);
+          }
+        }
+        if (board[pickedIndex + (8 * i) + i]?.chessmenType) {
+          break;
+        };
+      }
+    }
+    if (pickedBlock.chessColor === "black") {
+      for (let i = 1; i < board[pickedIndex].row; i++) {
+        if (!board[pickedIndex - (8 * i) - i]?.chessmenType || board[pickedIndex - (8 * i) - i]?.chessColor === "white") {
+          if (board[pickedIndex]?.row - i === board[pickedIndex - (8 * i) - i]?.row) {
+            canMoveArea.push(pickedIndex - (8 * i) - i);
+          }
+        }
+        if (board[pickedIndex - (8 * i) - i]?.chessmenType) {
+          break;
+        };
+      }
+      for (let i = 1; i < board[pickedIndex].row; i++) {
+        if (!board[pickedIndex - (8 * i) + i]?.chessmenType || board[pickedIndex - (8 * i) + i]?.chessColor === "white") {
+          if (board[pickedIndex]?.row - i === board[pickedIndex - (8 * i) + i]?.row) {
+            canMoveArea.push(pickedIndex - (8 * i) + i);
+          }
+        }
+        if (board[pickedIndex - (8 * i) + i]?.chessmenType) {
+          break;
+        };
+      }
+      for (let i = 1; i < 9 - board[pickedIndex].row; i++) {
+        if (!board[pickedIndex + (8 * i) - i]?.chessmenType || board[pickedIndex + (8 * i) - i]?.chessColor === "white") {
+          if (board[pickedIndex]?.row + i === board[pickedIndex + (8 * i) - i]?.row) {
+            canMoveArea.push(pickedIndex + (8 * i) - i);
+          }
+        }
+        if (board[pickedIndex + (8 * i) - i]?.chessmenType) {
+          break;
+        };
+      }
+      for (let i = 1; i < 9 - board[pickedIndex].row; i++) {
+        if (!board[pickedIndex + (8 * i) + i]?.chessmenType || board[pickedIndex + (8 * i) + i]?.chessColor === "white") {
+          if (board[pickedIndex]?.row + i === board[pickedIndex + (8 * i) + i]?.row) {
+            canMoveArea.push(pickedIndex + (8 * i) + i);
+          }
+        }
+        if (board[pickedIndex + (8 * i) + i]?.chessmenType) {
+          break;
+        };
+      }
+    }
+  }
 
   return canMoveArea;
 };

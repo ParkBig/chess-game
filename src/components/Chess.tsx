@@ -14,6 +14,7 @@ const Chess = () => {
   // test
   const canMoveArea = useTraceMoveArea(state => state.canMoveArea);
   console.log(canMoveArea)
+  // console.log(board)
 
   useEffect(() => {
     socket.on("perform-chessMove", (targetIndex) => {
