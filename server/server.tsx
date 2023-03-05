@@ -28,7 +28,12 @@ wsServer.on("connection", (socket) => {
 
   socket.on("enterRoom", (roomName, goToRoom) => {
     socket.join(roomName);
-    goToRoom();
+    const { count, player } = countRoomParticipant(roomName);
+    if (count > 2) {
+      goToRoom(false);
+    } else {
+      goToRoom(true);
+    }
   });
 
   socket.on("send_msg", (get) => {
@@ -50,4 +55,11 @@ wsServer.on("connection", (socket) => {
     setIsBlockPick(get.pickedIndex);
     socket.to(get.roomName).emit("picked-index", get.pickedIndex);
   });
+
+  socket.on("send_getReady", (get, setImReady) => {
+    console.log(get);
+    // wsServer.sockets.adapter.rooms.get(get.roomName)["hey"] = []
+    console.log(wsServer.sockets.adapter.rooms.get("1")["hey"])
+    setImReady();
+  })
 });

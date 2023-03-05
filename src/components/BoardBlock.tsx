@@ -18,7 +18,7 @@ import blackQueen from "../assets/png/black-queen.png";
 import blackRook from "../assets/png/black-rook.png";
 import { socket } from "./socketIo";
 import { useParams } from "react-router-dom";
-import siftChessmenToMove from "../hooks/siftChessmenToMove";
+import siftChessmenToMove from "../lib/siftChessmenToMove";
 
 const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
   const { roomName } = useParams();

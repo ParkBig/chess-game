@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket } from "./socketIo";
 import styled from "styled-components";
 import BoardBlock from "./BoardBlock";
-import { useBoardList, useTraceMoveArea, useUserState } from "../store/configureStore";
+import { useBoardList, useUserState } from "../store/configureStore";
 import { AnimatePresence } from "framer-motion";
 
 const Chess = () => {
@@ -11,11 +11,6 @@ const Chess = () => {
   const setIsBlockPick = useBoardList(state => state.setIsBlockPick);
   const setNowTurn = useUserState(state => state.setNowTurn);
   
-  // test and delete
-  const canMoveArea = useTraceMoveArea(state => state.canMoveArea);
-  console.log(canMoveArea)
-  // console.log(board)
-
   useEffect(() => {
     socket.on("perform-chessMove", (targetIndex) => {
       chessMove(targetIndex);
@@ -30,12 +25,12 @@ const Chess = () => {
     <Wrap>
       <AnimatePresence>
         {board.map((boardBlock, index) =>
-          <BoardBlock key={`${boardBlock.col}-${boardBlock.row}`} 
+          <BoardBlock 
+            key={`${boardBlock.col}-${boardBlock.row}`} 
             boardBlock={boardBlock}
             index={index}
           />
         )}
-
       </AnimatePresence>
     </Wrap>
   )

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useUserState } from "../store/configureStore";
 import { ChatList } from "../types/interface";
 import { socket } from "./socketIo";
 
@@ -9,6 +10,12 @@ const Chat = () => {
   const { roomName } = useParams();
   const [chatList, setChatList] = useState<ChatList[]>([]);
   const { register, handleSubmit, getValues, setValue } = useForm();
+  const imReady = useUserState(state => state.imReady);
+  const setImReady = useUserState(state => state.setImReady);
+
+  const sendGetReady = ()  => {
+    socket.emit("send_getReady", {roomName, isReady: !imReady}, setImReady);
+  };
 
   const sendMessage = () => {
     const { msg } = getValues();
@@ -36,9 +43,11 @@ const Chat = () => {
         )}
       </UpperChatList>
       <UpperDoChat>
-        <NickName>
-          가상의 닉네임
-        </NickName>
+        <UpperGetReadyBtn>
+          <GetReadyBtn onClick={sendGetReady}>
+            Get Ready
+          </GetReadyBtn>
+        </UpperGetReadyBtn>
         <Form onSubmit={handleSubmit(sendMessage)}>
           <Input {...register("msg")} />
           <Btn>
@@ -79,17 +88,29 @@ const UpperDoChat = styled.div`
   height: 20%;
   display: flex;
   flex-direction: column;
-`;
-const NickName = styled.div`
-  width: 100%;
-  height: 40%;
-  display: flex;
   justify-content: center;
   align-items: center;
 `;
+const UpperGetReadyBtn = styled.div`
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid black;
+`;
+const GetReadyBtn = styled.button`
+  width: 80%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+`;
 const Form = styled.form`
   width: 100%;
-  height: 60%;
+  height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

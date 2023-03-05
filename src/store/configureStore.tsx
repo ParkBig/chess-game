@@ -48,12 +48,16 @@ export const useBoardList = create(
 export const useUserState = create<UseUserState>(set => ({
   im: "",
   nowTurn: "player-1",
+  imReady: false,
   setIm: (player) => set(state => ({
     im: player
   })),
   setNowTurn: () => set(state => ({
     nowTurn: state.nowTurn === "player-1" ? "player-2" : "player-1"
   })),
+  setImReady: () => set(state => ({
+    imReady: !state.imReady
+  }))
 }));
 
 export const useTraceMoveArea = create<UseTraceMoveArea>(set => ({

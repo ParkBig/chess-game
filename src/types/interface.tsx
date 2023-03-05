@@ -29,8 +29,10 @@ export interface UseBoardList {
 export interface UseUserState {
   im: Player | "";
   nowTurn: Player;
+  imReady: boolean;
   setIm: (player: Player) => void;
   setNowTurn: () => void;
+  setImReady: () => void;
 }
 
 export interface UseTraceMoveArea {

@@ -5,11 +5,18 @@ import { socket } from "./socketIo";
 
 const Match = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, getValues } = useForm();
+  const { register, handleSubmit, getValues, setValue } = useForm();
 
   const enterTheRoom = () => {
     const { roomName } = getValues();
-    socket.emit("enterRoom", roomName, ()=>{navigate(`room/${roomName}`)})
+    socket.emit("enterRoom", roomName, (canGo: boolean)=>{
+      if (canGo) {
+        navigate(`room/${roomName}`);
+      } else {
+        alert("정원을 초과 했습니다.");
+        setValue("roomName", "");
+      }
+    });
   };
 
   return (

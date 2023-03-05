@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Chat from "../components/Chat";
 import Chess from "../components/Chess";
 import { socket } from "../components/socketIo";
-import boardList from "../hooks/boardList";
+import boardList from "../lib/boardList";
 import { useBoardList, useUserState } from "../store/configureStore";
 import { Player } from "../types/interface";
 
