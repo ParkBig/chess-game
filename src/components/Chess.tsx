@@ -1,16 +1,13 @@
 import { useEffect } from "react";
-import { socket } from "./socketIo";
+import { socket } from "../lib/socketIo";
+import { useBoardList, useGameState } from "../store/configureStore";
 import styled from "styled-components";
 import BoardBlock from "./BoardBlock";
-import { useBoardList, useUserState } from "../store/configureStore";
-import { AnimatePresence } from "framer-motion";
 
 const Chess = () => {
-  const board = useBoardList(state => state.board);
-  const chessMove = useBoardList(state => state.chessMove);
-  const setIsBlockPick = useBoardList(state => state.setIsBlockPick);
-  const setNowTurn = useUserState(state => state.setNowTurn);
-  
+  const setNowTurn = useGameState(state => state.setNowTurn);
+  const { board, chessMove, setIsBlockPick } = useBoardList();
+
   useEffect(() => {
     socket.on("perform-chessMove", (targetIndex) => {
       chessMove(targetIndex);
@@ -20,18 +17,21 @@ const Chess = () => {
     socket.on("picked-index", (pickedIndex) => {
       setIsBlockPick(pickedIndex);
     });
+
+    return () => {
+      socket.off("perform-chessMove");
+      socket.off("picked-index");
+    }
   }, []);
   return (
     <Wrap>
-      <AnimatePresence>
-        {board.map((boardBlock, index) =>
-          <BoardBlock 
-            key={`${boardBlock.col}-${boardBlock.row}`} 
-            boardBlock={boardBlock}
-            index={index}
-          />
-        )}
-      </AnimatePresence>
+      {board.map((boardBlock, index) =>
+        <BoardBlock 
+          key={`${boardBlock.col}-${boardBlock.row}`} 
+          boardBlock={boardBlock}
+          index={index}
+        />
+      )}
     </Wrap>
   )
 }

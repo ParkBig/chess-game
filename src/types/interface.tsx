@@ -21,23 +21,29 @@ export interface BoardsBlock {
 export interface UseBoardList {
   board: Board[];
   isBlockPick: IsBlockPick;
+  canMoveArea: number[];
+  gotcha: Gotcha;
   setBoard: (boardSetting: Board[]) => void;
   setIsBlockPick: (pickedIndex: number) => void;
+  setCanMoveArea: (siftAndCanMove: number[]) => void;
   chessMove: (afterIndex: number) => void;
+  setGotCha: () => void;
 }
 
 export interface UseUserState {
   im: Player | "";
-  nowTurn: Player;
   imReady: boolean;
   setIm: (player: Player) => void;
-  setNowTurn: () => void;
-  setImReady: () => void;
+  setImReady: (force?: Force) => void;
 }
 
-export interface UseTraceMoveArea {
-  canMoveArea: number[];
-  setCanMoveArea: (siftAndCanMove: number[]) => void;
+export interface UseGameState {
+  isStart: boolean;
+  nowTurn: Player;
+  gameAlert: GameAlert;
+  setIsStart: (force?: Force) => void;
+  setNowTurn: (force?: Player) => void;
+  setGameAlert: (detail: string) => void;
 }
 
 export type Player = "player-1" | "player-2";
@@ -48,7 +54,20 @@ export type Chessmen = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn" 
 
 export type Column = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
 
+type Force = "true" | "false";
+
 type IsBlockPick = {
   isPick: boolean;
   pickedIndex: number | null;
+}
+
+type Gotcha = {
+  got: boolean;
+  caughtChessColor: "black" | "white" | null;
+  chessmenType: Chessmen;
+}
+
+type GameAlert = {
+  onAlert: boolean;
+  alertDetail: string;
 }

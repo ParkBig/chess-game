@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
-import styled from "styled-components";
 import { BoardsBlock } from "../types/interface";
-import { useBoardList, useTraceMoveArea, useUserState } from "../store/configureStore";
+import { useBoardList, useGameState, useUserState } from "../store/configureStore";
+import { socket } from "../lib/socketIo";
+import { useParams } from "react-router-dom";
+import React from "react";
+import styled from "styled-components";
+import siftChessmenToMove from "../lib/siftChessmenToMove";
 
 import whiteBishop from "../assets/png/white-bishop.png";
 import whiteKing from "../assets/png/white-king.png";
@@ -16,28 +19,24 @@ import blackKnight from "../assets/png/black-knight.png";
 import blackPawn from "../assets/png/black-pawn.png";
 import blackQueen from "../assets/png/black-queen.png";
 import blackRook from "../assets/png/black-rook.png";
-import { socket } from "./socketIo";
-import { useParams } from "react-router-dom";
-import siftChessmenToMove from "../lib/siftChessmenToMove";
 
 const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
   const { roomName } = useParams();
-  const board = useBoardList(state => state.board);
-  const isBlockPick = useBoardList(state => state.isBlockPick);
   const im = useUserState(state => state.im);
-  const nowTurn = useUserState(state => state.nowTurn);
-  const canMoveArea = useTraceMoveArea(state => state.canMoveArea);
-  const setIsBlockPick = useBoardList(state => state.setIsBlockPick);
-  const chessMove = useBoardList(state => state.chessMove);
-  const setNowTurn = useUserState(state => state.setNowTurn);
-  const setCanMoveArea = useTraceMoveArea(state => state.setCanMoveArea);
-
+  const { nowTurn, isStart, setNowTurn, setGameAlert } = useGameState();
+  const { board, isBlockPick, canMoveArea, setIsBlockPick, chessMove, setCanMoveArea } = useBoardList();
+  
   const blockPick = () => {
+    if (!isStart) {
+      setGameAlert("아직 전부 준비되지 않았습니다.");
+      return;
+    }
     if (im === nowTurn) {
       setCanMoveArea(siftChessmenToMove(index, board));
       socket.emit("block-pick", { roomName, pickedIndex: index }, setIsBlockPick);
     }
   };
+
   const moveTo = () => {
     socket.emit("request-move", { roomName, targetIndex: index }, chessMove);
     setNowTurn();
@@ -106,25 +105,17 @@ const ChessmenImg = styled(motion.img)<{$myChess: boolean | null}>`
   cursor: pointer;
 `;
 const CanMoveArea = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   border-radius: 50px;
-  background-color: tomato;
+  background-color: #44bd32;
   position: absolute;
   z-index: 300;
   opacity: 0.5;
 `;
 
-
 const variants = {
   hover: {
-    // y: -10,
-    scale: 1.2
+    scale: 1.3
   },
-  // click: (isChessClick: boolean) => ({
-  //   y: isChessClick ? -10 : 0,
-  //   scale: isChessClick ? 1.2 : 1
-  // })
-}
-
-// 프레이머 모션 레이아웃아이디 버그 발견한거 같음.
+};

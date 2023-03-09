@@ -1,28 +1,89 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, } from "react-router-dom";
+import { socket } from "../lib/socketIo";
+import { useBoardList, useGameState, useUserState } from "../store/configureStore";
+import { Player } from "../types/interface";
+import { history } from "../lib/history";
 import styled from "styled-components";
 import Chat from "../components/Chat";
 import Chess from "../components/Chess";
-import { socket } from "../components/socketIo";
 import boardList from "../lib/boardList";
-import { useBoardList, useUserState } from "../store/configureStore";
-import { Player } from "../types/interface";
+import BgColorWithAlert from "../components/BgColorWithAlert";
+
+import roomPageBg from "../assets/png/roomPageBg.png";
 
 const RoomPage = () => {
   const { roomName } = useParams();
   const setBoard = useBoardList(state => state.setBoard);
-  const setIm = useUserState(state => state.setIm);
+  const { im, imReady, setIm, setImReady } = useUserState();
+  const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert} = useGameState();
+  const setGotCha = useBoardList(state => state.setGotCha);
+
+  const whenBackPage = () => {
+    setIsStart("false");
+    setImReady("false");
+    setNowTurn("player-1");
+    setGotCha();
+    socket.emit("leave-or-initialize-room", { roomName, state: "leave" });
+  };
 
   useEffect(() => {
-    socket.emit("boardSetting", roomName, (player: Player) => {
+    socket.emit("board-setting", roomName, (player: Player) => {
       setIm(player);
       const boardSetting = boardList(player);
       setBoard(boardSetting);
+      setGameAlert(`당신은 ${player}, ${player === "player-1" ? "하얀색말입니다." : "검은색말입니다."}`)
     });
+
+    socket.on("all-ready", (start) => {
+      setIsStart();
+      console.log(`Game ${start}`);
+    });
+
+    socket.on("opponent-entered", () => {
+      setGameAlert("상대방이 입장했습니다!")
+    });
+
+    socket.on("rematch-start", (msg) => {
+      console.log(msg)
+    })
+
+    return () => {
+      socket.off("board-setting");
+      socket.off("all-ready");
+      socket.off("opponent-entered");
+      socket.off("rematch-start");
+    };
   }, []);
+
+  useEffect(() => {
+    socket.on("initialize-ready", () => {
+      setGameAlert("상대방이 나갔습니다!");
+      setNowTurn("player-1");
+      setIsStart("false");
+      setImReady("false");
+      setGotCha();
+      if (im) {
+        const boardSetting = boardList(im);
+        setBoard(boardSetting);
+      };
+    });
+
+    const _unListenHistoryEvent = history.listen(({ action }) => {
+      if (action === "POP") {
+        whenBackPage();
+      };
+    });
+
+    return () => {
+      socket.off("initialize-ready");
+      _unListenHistoryEvent();
+    }
+  }, [imReady, isStart]);
   return (
     <Wrap>
-      <ChessArea>
+      <ChessArea turn={nowTurn}>
+        <BgColorWithAlert />
         <Chess />
       </ChessArea>
       <ChatArea>
@@ -40,15 +101,18 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const ChessArea = styled.div`
+const ChessArea = styled.div<{ turn: Player }>`
   width: 80%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  background: url(${roomPageBg});
+  background-size: cover;
 `;
 const ChatArea = styled.div`
   width: 20%;
   height: 100%;
-  border-left: 1px solid black;
+  border-left: 5px solid #27ae60;
 `;

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../lib/socketIo";
 import styled from "styled-components"
-import { socket } from "./socketIo";
 
 const Match = () => {
   const navigate = useNavigate();
@@ -18,49 +18,45 @@ const Match = () => {
       }
     });
   };
-
   return (
-    <Wrap>
-      <UpperMatch>
-        <Description>
-          방을 생성하거나 입장하세요.<br/>
-          (문자,숫자 10글자까지.)
-        </Description>
-        <form onSubmit={handleSubmit(enterTheRoom)}>
-          <Input {...register("roomName")} />
-        </form>
-      </UpperMatch>
-    </Wrap>
+    <UpperMatch>
+      <Description>
+        Create or Join the Room!
+      </Description>
+      <form onSubmit={handleSubmit(enterTheRoom)}>
+        <Input {...register("roomName")} placeholder="Room Name" />
+      </form>
+    </UpperMatch>
   )
-}
+};
 
 export default Match;
 
-const Wrap = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const UpperMatch = styled.div`
-  height: 280px;
+  height: 200px;
   width: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  border: 1px solid black;
+  background: linear-gradient(135deg, rgb(0, 238, 155), rgb(238, 178, 0));
+  border-radius: 10px;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
+  font-weight: 700;
 `;
 const Description = styled.div`
-  height: 100px;
+  height: 70px;
   width: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-size: 1.7em;
 `;
 const Input = styled.input`
-  height: 70px;
-  width: 300px;
+  height: 60px;
+  width: 320px;
   border-radius: 10px;
+  text-align: center;
+  font-size: 1.2em;
 `;

@@ -10,6 +10,14 @@ const wsServer = require("socket.io")(httpServer);
 // https서버
 httpServer.listen(5000, () => console.log("Listening on port 5000"));
 
+const findParticipantWithNickName = (roomName, nickName) => {
+  for (const socketId of wsServer.sockets.adapter.rooms.get(roomName)) {
+    const participant = wsServer.sockets.sockets.get(socketId);
+    if (participant["nickName"] === nickName) {
+      return true;
+    }
+  }
+}
 
 const countRoomParticipant = (roomName) => {
   const count = wsServer.sockets.adapter.rooms.get(roomName)?.size;
@@ -17,6 +25,9 @@ const countRoomParticipant = (roomName) => {
     return {count, player: "player-1"};
   }
   if (count === 2) {
+    if (findParticipantWithNickName(roomName, "player-2")) {
+      return {count, player: "player-1"};
+    }
     return {count, player: "player-2"};
   }
   return {count, player: "null"};;
@@ -24,26 +35,54 @@ const countRoomParticipant = (roomName) => {
 
 // 웹소켓
 wsServer.on("connection", (socket) => {
-  socket.onAny((ev) => { console.log(ev) });
+  // 이벤트 감지
+  socket.onAny((ev) => {
+    console.log(ev)
+  });
 
+  // 방 입장, 퇴장
   socket.on("enterRoom", (roomName, goToRoom) => {
     socket.join(roomName);
     const { count, player } = countRoomParticipant(roomName);
+    if (count === 1) {
+      wsServer.sockets.adapter.rooms.get(roomName)["readyArr"] = [];
+    }
+    socket["nickName"] = player;
     if (count > 2) {
       goToRoom(false);
     } else {
       goToRoom(true);
     }
   });
+  socket.on("leave-or-initialize-room", (get, goToHome) => {
+    if (wsServer.sockets.adapter.rooms.get(get.roomName)?.size > 0) {
+      if (wsServer.sockets.adapter.rooms.get(get.roomName)["readyArr"]) {
+        wsServer.sockets.adapter.rooms.get(get.roomName)["readyArr"] = [];
+      }
+    }
+    if (get.state === "leave") {
+      wsServer.in(get.roomName).emit("initialize-ready");
+      socket["nickName"] = null;
+      socket.leave(get.roomName);
+      if (goToHome) {
+        goToHome("/");
+      }
+    };
+    if (get.state === "initialize") {
+      socket.to(get.roomName).emit("rematch-start", "Opponent Want Rematch!");
+    }
+  });
 
+  socket.on("initialize-ready", roomName => {
+    wsServer.sockets.adapter.rooms.get(roomName)["readyArr"] = [];
+  })
   socket.on("send_msg", (get) => {
     socket.to(get.roomName).emit("get_msg", get.sendChat);
   });
 
-  socket.on("boardSetting", (roomName, setBoard) => {
-    const { count, player } = countRoomParticipant(roomName);
-    socket["nickName"] = player;
-    setBoard(player);
+  socket.on("board-setting", (roomName, setBoard) => {
+    setBoard(socket["nickName"]);
+    socket.to(roomName).emit("opponent-entered");
   });
 
   socket.on("request-move", (get, chessMove) => {
@@ -57,9 +96,16 @@ wsServer.on("connection", (socket) => {
   });
 
   socket.on("send_getReady", (get, setImReady) => {
-    console.log(get);
-    // wsServer.sockets.adapter.rooms.get(get.roomName)["hey"] = []
-    console.log(wsServer.sockets.adapter.rooms.get("1")["hey"])
+    if (get.isReady) {
+      wsServer.sockets.adapter.rooms.get(get.roomName)["readyArr"].push(get.isReady);
+    } else {
+      wsServer.sockets.adapter.rooms.get(get.roomName)["readyArr"].pop();
+    }
     setImReady();
-  })
+
+    if (wsServer.sockets.adapter.rooms.get(get.roomName)["readyArr"].length === 2) {
+      console.log(`room: ${get.roomName}. is ready to start.`)
+      wsServer.in(get.roomName).emit("all-ready", "start!");
+    };
+  });
 });
