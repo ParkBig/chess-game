@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.js": "/chess-game/static/js/main.b3e79a91.js",
+    "static/media/chessBGImg.png": "/chess-game/static/media/chessBGImg.b5e5fffcce7e57879254.png",
+    "static/media/reGameBg.png": "/chess-game/static/media/reGameBg.31f52c8f40772a114d73.png",
+    "static/media/roomPageBg.png": "/chess-game/static/media/roomPageBg.ef37fdac608fec383bf1.png",
+    "static/media/chatBGImg.png": "/chess-game/static/media/chatBGImg.bb708f6199ded3e46bcb.png",
+    "static/media/craftChess.png": "/chess-game/static/media/craftChess.e92afe82be8fec46db7e.png",
+    "static/media/alertImg.png": "/chess-game/static/media/alertImg.c02d806701de57c46971.png",
+    "static/media/ggBg.png": "/chess-game/static/media/ggBg.58996afb6dbc97acd3a6.png",
+    "static/media/hourGlass.gif": "/chess-game/static/media/hourGlass.d1c592c06b1b185934ec.gif",
+    "index.html": "/chess-game/index.html",
+    "main.b3e79a91.js.map": "/chess-game/static/js/main.b3e79a91.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.b3e79a91.js"
+  ]
+}
