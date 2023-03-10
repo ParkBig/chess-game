@@ -11,6 +11,7 @@ import boardList from "../lib/boardList";
 import BgColorWithAlert from "../components/BgColorWithAlert";
 
 import roomPageBg from "../assets/png/roomPageBg.png";
+import { Helmet } from "react-helmet-async";
 
 const RoomPage = () => {
   const { roomName } = useParams();
@@ -82,6 +83,11 @@ const RoomPage = () => {
   }, [imReady, isStart]);
   return (
     <Wrap>
+      <Helmet>
+        <title>
+          chess | room {roomName}
+        </title>
+      </Helmet>
       <ChessArea turn={nowTurn}>
         <BgColorWithAlert />
         <Chess />
