@@ -1,4 +1,5 @@
 {
+  "homepage": "https://parkbig.github.io/chess-game/",
   "name": "chess-game",
   "version": "0.1.0",
   "private": true,
@@ -27,10 +28,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon ./server/server.tsx"
+    "server": "nodemon ./server/server.tsx",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "gh-pages": "^5.0.0"
   }
 }
