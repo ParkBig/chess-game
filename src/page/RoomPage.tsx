@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, } from "react-router-dom";
+import { useNavigate, useParams, } from "react-router-dom";
 import { socket } from "../lib/socketIo";
 import { useBoardList, useGameState, useUserState } from "../store/configureStore";
 import { Player } from "../types/interface";
@@ -15,6 +15,7 @@ import { Helmet } from "react-helmet-async";
 
 const RoomPage = () => {
   const { roomName } = useParams();
+  const navigate = useNavigate();
   const setBoard = useBoardList(state => state.setBoard);
   const { im, imReady, setIm, setImReady } = useUserState();
   const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert} = useGameState();
@@ -27,6 +28,16 @@ const RoomPage = () => {
     setGotCha();
     socket.emit("leave-or-initialize-room", { roomName, state: "leave" });
   };
+
+  const whenReloadPage = (ev: BeforeUnloadEvent) => {
+    ev.preventDefault();
+    ev.returnValue = ""
+    setIsStart("false");
+    setImReady("false");
+    setNowTurn("player-1");
+    setGotCha();
+    socket.emit("leave-or-initialize-room", { roomName, state: "leave" }, navigate);
+  }
 
   useEffect(() => {
     socket.emit("board-setting", roomName, (player: Player) => {
