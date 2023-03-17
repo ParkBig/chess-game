@@ -24,7 +24,7 @@ const Chess = () => {
     }
   }, []);
   return (
-    <Wrap>
+    <Wrap length={window.innerHeight}>
       {board.map((boardBlock, index) =>
         <BoardBlock 
           key={`${boardBlock.col}-${boardBlock.row}`} 
@@ -38,9 +38,9 @@ const Chess = () => {
 
 export default Chess;
 
-const Wrap = styled.div`
-  width: 880px;
-  height: 880px;
+const Wrap = styled.div<{length: number}>`
+  width: ${prop => `${prop.length*(6/7)}px` };
+  height: ${prop => `${prop.length*(6/7)}px` };
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(8, 1fr);

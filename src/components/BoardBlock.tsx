@@ -86,8 +86,8 @@ const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
 export default React.memo(BoardBlock);
 
 const Area = styled.div<{isColor: boolean}>`
-  width: 110px;
-  height: 110px;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,16 +97,16 @@ const Area = styled.div<{isColor: boolean}>`
   z-index: 100;
 `;
 const ChessmenImg = styled(motion.img)<{$myChess: boolean | null}>`
-  width: 64px;
-  height: 64px;
+  width: 60%;
+  height: 60%;
   position: absolute;
   z-index: 200;
   pointer-events: ${prop => prop.$myChess ? null : "none"};
   cursor: pointer;
 `;
 const CanMoveArea = styled.div`
-  width: 90px;
-  height: 90px;
+  width: 80%;
+  height: 80%;
   border-radius: 50px;
   background-color: #44bd32;
   position: absolute;
