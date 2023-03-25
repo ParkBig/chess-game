@@ -1,46 +1,29 @@
-# Getting Started with Create React App
+# Chess-Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+지인과의 체스게임을 즐길수 있는 체스게임입니다.
 
-## Available Scripts
+----
+## Tech Stack
 
-In the project directory, you can run:
+- Typescript
+- Express
+- Socket.io
+- Zustand
+- Styled-Components
 
-### `npm start`
+----
+### `주요 기능`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+홈 화면에서 입장하고자하는 방이름, 혹은 이미 생성된 방이름을 입력하여 게임방에 입장할 수 있습니다.
+입장가능한 최대인원수는 2명이고 초과시 입장이 불가능합니다.
+최초 입장시 내가 몇번 플레이언지, 무슨색 말인지 알람이 뜨고, 몇초후 사라집니다.
+마찬가지로 상대방이 입장하거나 게임 준비, 말이 잡힐 때 등 다양한 알람이 뜹니다.
+Ready 버튼을 전부 누르면 게임이 시작되며 누구의 순서인지 알 수 있도록 화면색 변화와 문구가 뜹니다.
+게임이 종료되면 재매치를 하거나 게임방을 나갈 수 있습니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+----
+### `시연 영상`
 
-### `npm test`
+[유투브 시연영상 보기 클릭!](https://youtu.be/x_SK8mrKBl4)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+----
