@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { socket } from "../lib/socketIo";
-import { useBoardList, useGameState } from "../store/configureStore";
+import useBoardList from "../store/useBoardList";
 import styled from "styled-components";
 import BoardBlock from "./BoardBlock";
+import useGameState from "../store/useGameState";
 
 const Chess = () => {
   const setNowTurn = useGameState(state => state.setNowTurn);

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { socket } from "../lib/socketIo";
-import { useBoardList, useGameState, useUserState } from "../store/configureStore";
 import { Player } from "../types/interface";
 import styled from "styled-components";
 import boardList from "../lib/boardList";
+import useBoardList from "../store/useBoardList";
+import useUserState from "../store/useUserState";
+import useGameState from "../store/useGameState";
 
 import hourGlass from "../assets/gif/hourGlass.gif";
 import craftChess from "../assets/png/craftChess.png";

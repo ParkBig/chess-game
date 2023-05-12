@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useNavigate, useParams, } from "react-router-dom";
 import { socket } from "../lib/socketIo";
-import { useBoardList, useGameState, useUserState } from "../store/configureStore";
 import { Player } from "../types/interface";
 import { history } from "../lib/history";
+import useBoardList from "../store/useBoardList";
 import styled from "styled-components";
 import Chat from "../components/Chat";
 import Chess from "../components/Chess";
 import boardList from "../lib/boardList";
 import BgColorWithAlert from "../components/BgColorWithAlert";
+import useUserState from "../store/useUserState";
+import useGameState from "../store/useGameState";
 
 import roomPageBg from "../assets/png/roomPageBg.png";
 import { Helmet } from "react-helmet-async";
@@ -16,10 +18,9 @@ import { Helmet } from "react-helmet-async";
 const RoomPage = () => {
   const { roomName } = useParams();
   const navigate = useNavigate();
-  const setBoard = useBoardList(state => state.setBoard);
+  const { setBoard, setGotCha } = useBoardList();
   const { im, imReady, setIm, setImReady } = useUserState();
   const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert} = useGameState();
-  const setGotCha = useBoardList(state => state.setGotCha);
 
   const whenBackPage = () => {
     setIsStart("false");
@@ -28,16 +29,6 @@ const RoomPage = () => {
     setGotCha();
     socket.emit("leave-or-initialize-room", { roomName, state: "leave" });
   };
-
-  const whenReloadPage = (ev: BeforeUnloadEvent) => {
-    ev.preventDefault();
-    ev.returnValue = ""
-    setIsStart("false");
-    setImReady("false");
-    setNowTurn("player-1");
-    setGotCha();
-    socket.emit("leave-or-initialize-room", { roomName, state: "leave" }, navigate);
-  }
 
   useEffect(() => {
     socket.emit("board-setting", roomName, (player: Player) => {

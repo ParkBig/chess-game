@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { BoardsBlock } from "../types/interface";
-import { useBoardList, useGameState, useUserState } from "../store/configureStore";
 import { socket } from "../lib/socketIo";
 import { useParams } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 import siftChessmenToMove from "../lib/siftChessmenToMove";
+import useBoardList from "../store/useBoardList";
+import useUserState from "../store/useUserState";
+import useGameState from "../store/useGameState";
 
 import whiteBishop from "../assets/png/white-bishop.png";
 import whiteKing from "../assets/png/white-king.png";

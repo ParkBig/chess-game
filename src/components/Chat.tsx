@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useGameState, useUserState } from "../store/configureStore";
 import { ChatList } from "../types/interface";
 import { socket } from "../lib/socketIo";
+import useUserState from "../store/useUserState";
+import useGameState from "../store/useGameState";
 
-import chatBGImg from "../assets/png/chatBGImg.png"
+import chatBGImg from "../assets/png/chatBGImg.png";
 
 const Chat = () => {
   const { roomName } = useParams();

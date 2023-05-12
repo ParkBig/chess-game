@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { immer } from 'zustand/middleware/immer'
-import { Board, UseBoardList, UseGameState, UseUserState } from "../types/interface";
+import { immer } from "zustand/middleware/immer";
+import { Board, UseBoardList } from "../types/interface";
 
 // 체스 상태 관련
-export const useBoardList = create(
+const useBoardList = create(
   immer<UseBoardList>((set) => ({
     board: [],
     isBlockPick: {isPick: false, pickedIndex: null},
@@ -64,57 +64,4 @@ export const useBoardList = create(
   }))
 );
 
-// 유저 상태 관련
-export const useUserState = create(
-  immer<UseUserState>((set) => ({
-    im: "",
-    imReady: false,
-    setIm: (player) => (
-      set((state) => {
-        state.im = player
-      })
-    ),
-    setImReady: (force) => (
-      set((state) => {
-        if (force) {
-          state.imReady = JSON.parse(force);
-        } else {
-          state.imReady = !state.imReady
-        }
-      })
-    )
-  }))
-)
-
-// 게임 상태 관련
-export const useGameState = create(
-  immer<UseGameState>((set) => ({
-    isStart: false,
-    nowTurn: "player-1",
-    gameAlert: { onAlert: false, alertDetail: "" },
-    setIsStart: (force) => (
-      set((state) => {
-        if (force) {
-          state.isStart = JSON.parse(force);
-        } else {
-          state.isStart = !state.isStart
-        }
-      })
-    ),
-    setNowTurn: (force) => (
-      set((state) => {
-        if (force) {
-          state.nowTurn = force;
-        } else {
-          state.nowTurn = (state.nowTurn === "player-1" ? "player-2" : "player-1")
-        }
-      })
-    ),
-    setGameAlert: (detail) => (
-      set((state) => {
-        state.gameAlert.onAlert = !state.gameAlert.onAlert;
-        state.gameAlert.alertDetail = detail;
-      })
-    )
-  }))
-);
+export default useBoardList;
