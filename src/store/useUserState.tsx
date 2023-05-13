@@ -7,20 +7,18 @@ const useUserState = create(
   immer<UseUserState>((set) => ({
     im: "",
     imReady: false,
-    setIm: (player) => (
+    setIm: (player) =>
       set((state) => {
-        state.im = player
-      })
-    ),
-    setImReady: (force) => (
+        state.im = player;
+      }),
+    setImReady: (force) =>
       set((state) => {
         if (force) {
           state.imReady = JSON.parse(force);
         } else {
-          state.imReady = !state.imReady
+          state.imReady = !state.imReady;
         }
-      })
-    )
+      }),
   }))
 );
 

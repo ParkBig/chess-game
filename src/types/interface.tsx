@@ -5,13 +5,13 @@ export interface Board {
   chessmenType: Chessmen;
   isMyChessmen: boolean | null;
   chessColor: ChessColor;
-};
+}
 
 export interface ChatList {
   me: boolean;
   chat: string;
-  time: number
-};
+  time: number;
+}
 
 export interface BoardsBlock {
   boardBlock: Board;
@@ -50,7 +50,14 @@ export type Player = "player-1" | "player-2";
 
 export type ChessColor = "black" | "white" | null;
 
-export type Chessmen = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn" | null;
+export type Chessmen =
+  | "king"
+  | "queen"
+  | "rook"
+  | "bishop"
+  | "knight"
+  | "pawn"
+  | null;
 
 export type Column = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
 
@@ -59,15 +66,15 @@ type Force = "true" | "false";
 type IsBlockPick = {
   isPick: boolean;
   pickedIndex: number | null;
-}
+};
 
 type Gotcha = {
   got: boolean;
   caughtChessColor: "black" | "white" | null;
   chessmenType: Chessmen;
-}
+};
 
 type GameAlert = {
   onAlert: boolean;
   alertDetail: string;
-}
+};

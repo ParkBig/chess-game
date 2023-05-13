@@ -7,30 +7,28 @@ const useGameState = create(
     isStart: false,
     nowTurn: "player-1",
     gameAlert: { onAlert: false, alertDetail: "" },
-    setIsStart: (force) => (
+    setIsStart: (force) =>
       set((state) => {
         if (force) {
           state.isStart = JSON.parse(force);
         } else {
-          state.isStart = !state.isStart
+          state.isStart = !state.isStart;
         }
-      })
-    ),
-    setNowTurn: (force) => (
+      }),
+    setNowTurn: (force) =>
       set((state) => {
         if (force) {
           state.nowTurn = force;
         } else {
-          state.nowTurn = (state.nowTurn === "player-1" ? "player-2" : "player-1")
+          state.nowTurn =
+            state.nowTurn === "player-1" ? "player-2" : "player-1";
         }
-      })
-    ),
-    setGameAlert: (detail) => (
+      }),
+    setGameAlert: (detail) =>
       set((state) => {
         state.gameAlert.onAlert = !state.gameAlert.onAlert;
         state.gameAlert.alertDetail = detail;
-      })
-    )
+      }),
   }))
 );
 

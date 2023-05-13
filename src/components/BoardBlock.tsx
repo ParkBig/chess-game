@@ -22,12 +22,19 @@ import blackPawn from "../assets/png/black-pawn.png";
 import blackQueen from "../assets/png/black-queen.png";
 import blackRook from "../assets/png/black-rook.png";
 
-const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
+const BoardBlock = ({ boardBlock, index }: BoardsBlock) => {
   const { roomName } = useParams();
-  const im = useUserState(state => state.im);
+  const im = useUserState((state) => state.im);
   const { nowTurn, isStart, setNowTurn, setGameAlert } = useGameState();
-  const { board, isBlockPick, canMoveArea, setIsBlockPick, chessMove, setCanMoveArea } = useBoardList();
-  
+  const {
+    board,
+    isBlockPick,
+    canMoveArea,
+    setIsBlockPick,
+    chessMove,
+    setCanMoveArea,
+  } = useBoardList();
+
   const blockPick = () => {
     if (!isStart) {
       setGameAlert("아직 전부 준비되지 않았습니다.");
@@ -35,7 +42,11 @@ const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
     }
     if (im === nowTurn) {
       setCanMoveArea(siftChessmenToMove(index, board));
-      socket.emit("block-pick", { roomName, pickedIndex: index }, setIsBlockPick);
+      socket.emit(
+        "block-pick",
+        { roomName, pickedIndex: index },
+        setIsBlockPick
+      );
     }
   };
 
@@ -45,65 +56,71 @@ const BoardBlock = ({boardBlock, index}: BoardsBlock) => {
   };
   return (
     <Area isColor={boardBlock.color}>
-      {isBlockPick.isPick && canMoveArea.includes(index) && im === nowTurn ?
+      {isBlockPick.isPick && canMoveArea.includes(index) && im === nowTurn ? (
         <CanMoveArea onClick={moveTo}></CanMoveArea>
-        :
-        null
-      }
-      {boardBlock.chessmenType ?
+      ) : null}
+      {boardBlock.chessmenType ? (
         <ChessmenImg
           variants={variants}
           whileHover="hover"
           onClick={blockPick}
           $myChess={boardBlock.isMyChessmen}
           src={
-            boardBlock.chessColor === "white" ? (
-            boardBlock.chessmenType === "bishop" ? whiteBishop :
-            boardBlock.chessmenType === "king" ? whiteKing :
-            boardBlock.chessmenType === "knight" ? whiteKnight :
-            boardBlock.chessmenType === "pawn" ? whitePawn :
-            boardBlock.chessmenType === "queen" ? whiteQueen :
-            boardBlock.chessmenType === "rook" ? whiteRook :
-            null
-            ) :
-            boardBlock.chessColor === "black" ? (
-            boardBlock.chessmenType === "bishop" ? blackBishop :
-            boardBlock.chessmenType === "king" ? blackKing :
-            boardBlock.chessmenType === "knight" ? blackKnight :
-            boardBlock.chessmenType === "pawn" ? blackPawn :
-            boardBlock.chessmenType === "queen" ? blackQueen :
-            boardBlock.chessmenType === "rook" ? blackRook :
-            null
-            ) :
-            null
+            boardBlock.chessColor === "white"
+              ? boardBlock.chessmenType === "bishop"
+                ? whiteBishop
+                : boardBlock.chessmenType === "king"
+                ? whiteKing
+                : boardBlock.chessmenType === "knight"
+                ? whiteKnight
+                : boardBlock.chessmenType === "pawn"
+                ? whitePawn
+                : boardBlock.chessmenType === "queen"
+                ? whiteQueen
+                : boardBlock.chessmenType === "rook"
+                ? whiteRook
+                : null
+              : boardBlock.chessColor === "black"
+              ? boardBlock.chessmenType === "bishop"
+                ? blackBishop
+                : boardBlock.chessmenType === "king"
+                ? blackKing
+                : boardBlock.chessmenType === "knight"
+                ? blackKnight
+                : boardBlock.chessmenType === "pawn"
+                ? blackPawn
+                : boardBlock.chessmenType === "queen"
+                ? blackQueen
+                : boardBlock.chessmenType === "rook"
+                ? blackRook
+                : null
+              : null
           }
         />
-        :
-        null
-      }
+      ) : null}
     </Area>
-  )
-}
+  );
+};
 
 export default React.memo(BoardBlock);
 
-const Area = styled.div<{isColor: boolean}>`
+const Area = styled.div<{ isColor: boolean }>`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  background-color: ${prop => prop.isColor ? "#353b48" : "white" };
+  background-color: ${(prop) => (prop.isColor ? "#353b48" : "white")};
   position: relative;
   z-index: 100;
 `;
-const ChessmenImg = styled(motion.img)<{$myChess: boolean | null}>`
+const ChessmenImg = styled(motion.img)<{ $myChess: boolean | null }>`
   width: 60%;
   height: 60%;
   position: absolute;
   z-index: 200;
-  pointer-events: ${prop => prop.$myChess ? null : "none"};
+  pointer-events: ${(prop) => (prop.$myChess ? null : "none")};
   cursor: pointer;
 `;
 const CanMoveArea = styled.div`
@@ -118,6 +135,6 @@ const CanMoveArea = styled.div`
 
 const variants = {
   hover: {
-    scale: 1.3
+    scale: 1.3,
   },
 };

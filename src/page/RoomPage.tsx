@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, useParams, } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { socket } from "../lib/socketIo";
 import { Player } from "../types/interface";
 import { history } from "../lib/history";
@@ -20,7 +20,8 @@ const RoomPage = () => {
   const navigate = useNavigate();
   const { setBoard, setGotCha } = useBoardList();
   const { im, imReady, setIm, setImReady } = useUserState();
-  const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert} = useGameState();
+  const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert } =
+    useGameState();
 
   const whenBackPage = () => {
     setIsStart("false");
@@ -35,7 +36,11 @@ const RoomPage = () => {
       setIm(player);
       const boardSetting = boardList(player);
       setBoard(boardSetting);
-      setGameAlert(`당신은 ${player}, ${player === "player-1" ? "하얀색말입니다." : "검은색말입니다."}`)
+      setGameAlert(
+        `당신은 ${player}, ${
+          player === "player-1" ? "하얀색말입니다." : "검은색말입니다."
+        }`
+      );
     });
 
     socket.on("all-ready", (start) => {
@@ -44,12 +49,12 @@ const RoomPage = () => {
     });
 
     socket.on("opponent-entered", () => {
-      setGameAlert("상대방이 입장했습니다!")
+      setGameAlert("상대방이 입장했습니다!");
     });
 
     socket.on("rematch-start", (msg) => {
-      console.log(msg)
-    })
+      console.log(msg);
+    });
 
     return () => {
       socket.off("board-setting");
@@ -69,26 +74,24 @@ const RoomPage = () => {
       if (im) {
         const boardSetting = boardList(im);
         setBoard(boardSetting);
-      };
+      }
     });
 
     const _unListenHistoryEvent = history.listen(({ action }) => {
       if (action === "POP") {
         whenBackPage();
-      };
+      }
     });
 
     return () => {
       socket.off("initialize-ready");
       _unListenHistoryEvent();
-    }
+    };
   }, [imReady, isStart]);
   return (
     <Wrap>
       <Helmet>
-        <title>
-          chess | room {roomName}
-        </title>
+        <title>chess | room {roomName}</title>
       </Helmet>
       <ChessArea turn={nowTurn}>
         <BgColorWithAlert />
@@ -98,8 +101,8 @@ const RoomPage = () => {
         <Chat />
       </ChatArea>
     </Wrap>
-  )
-}
+  );
+};
 
 export default RoomPage;
 

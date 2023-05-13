@@ -6,15 +6,14 @@ import { Board, UseBoardList } from "../types/interface";
 const useBoardList = create(
   immer<UseBoardList>((set) => ({
     board: [],
-    isBlockPick: {isPick: false, pickedIndex: null},
+    isBlockPick: { isPick: false, pickedIndex: null },
     canMoveArea: [],
     gotcha: { got: false, caughtChessColor: null, chessmenType: null },
-    setBoard: (boardSetting: Board[]) => (
+    setBoard: (boardSetting: Board[]) =>
       set((state) => {
         state.board = boardSetting;
-      })
-    ),
-    setIsBlockPick: (pickedIndex) => (
+      }),
+    setIsBlockPick: (pickedIndex) =>
       set((state) => {
         if (state.isBlockPick.pickedIndex === pickedIndex) {
           state.isBlockPick.isPick = !state.isBlockPick.isPick;
@@ -23,19 +22,20 @@ const useBoardList = create(
           state.isBlockPick.isPick = true;
           state.isBlockPick.pickedIndex = pickedIndex;
         }
-      })
-    ),
-    setCanMoveArea: (siftAndCanMove) => (
+      }),
+    setCanMoveArea: (siftAndCanMove) =>
       set((state) => {
         state.canMoveArea = siftAndCanMove;
-      })
-    ),
-    setGotCha: () => (
+      }),
+    setGotCha: () =>
       set((state) => {
-        state.gotcha = { got: false, caughtChessColor: null, chessmenType: null }
-      })
-    ),
-    chessMove: (afterIndex) => (
+        state.gotcha = {
+          got: false,
+          caughtChessColor: null,
+          chessmenType: null,
+        };
+      }),
+    chessMove: (afterIndex) =>
       set((state) => {
         if (state.isBlockPick.isPick && state.isBlockPick.pickedIndex) {
           const afterBlock = state.board[afterIndex];
@@ -59,8 +59,7 @@ const useBoardList = create(
           state.board[state.isBlockPick.pickedIndex] = beforeBlock;
           state.isBlockPick.isPick = false;
         }
-      })
-    )
+      }),
   }))
 );
 

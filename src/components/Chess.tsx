@@ -6,7 +6,7 @@ import BoardBlock from "./BoardBlock";
 import useGameState from "../store/useGameState";
 
 const Chess = () => {
-  const setNowTurn = useGameState(state => state.setNowTurn);
+  const setNowTurn = useGameState((state) => state.setNowTurn);
   const { board, chessMove, setIsBlockPick } = useBoardList();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const Chess = () => {
       chessMove(targetIndex);
       setNowTurn();
     });
-    
+
     socket.on("picked-index", (pickedIndex) => {
       setIsBlockPick(pickedIndex);
     });
@@ -22,26 +22,26 @@ const Chess = () => {
     return () => {
       socket.off("perform-chessMove");
       socket.off("picked-index");
-    }
+    };
   }, []);
   return (
     <Wrap length={window.innerHeight}>
-      {board.map((boardBlock, index) =>
-        <BoardBlock 
-          key={`${boardBlock.col}-${boardBlock.row}`} 
+      {board.map((boardBlock, index) => (
+        <BoardBlock
+          key={`${boardBlock.col}-${boardBlock.row}`}
           boardBlock={boardBlock}
           index={index}
         />
-      )}
+      ))}
     </Wrap>
-  )
-}
+  );
+};
 
 export default Chess;
 
-const Wrap = styled.div<{length: number}>`
-  width: ${prop => `${prop.length*(6/7)}px` };
-  height: ${prop => `${prop.length*(6/7)}px` };
+const Wrap = styled.div<{ length: number }>`
+  width: ${(prop) => `${prop.length * (6 / 7)}px`};
+  height: ${(prop) => `${prop.length * (6 / 7)}px`};
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(8, 1fr);

@@ -14,26 +14,26 @@ const Chat = () => {
   const [chatList, setChatList] = useState<ChatList[]>([]);
   const { register, handleSubmit, getValues, setValue } = useForm();
   const { imReady, setImReady } = useUserState();
-  const isStart = useGameState(state => state.isStart);
+  const isStart = useGameState((state) => state.isStart);
 
-  const sendGetReady = ()  => {
-    socket.emit("send_getReady", {roomName, isReady: !imReady}, setImReady);
+  const sendGetReady = () => {
+    socket.emit("send_getReady", { roomName, isReady: !imReady }, setImReady);
   };
 
   const sendMessage = () => {
     const { msg } = getValues();
     const newChat = { me: true, chat: msg, time: Date.now() };
-    setChatList(prev => [...prev, newChat]);
+    setChatList((prev) => [...prev, newChat]);
 
-    const sendChat = {...newChat, me: false};
-    socket.emit("send_msg", {roomName, sendChat});
+    const sendChat = { ...newChat, me: false };
+    socket.emit("send_msg", { roomName, sendChat });
 
     setValue("msg", "");
   };
 
   useEffect(() => {
     socket.on("get_msg", (getMsg) => {
-      setChatList(prev => [...prev, getMsg]);
+      setChatList((prev) => [...prev, getMsg]);
     });
 
     return () => {
@@ -43,34 +43,33 @@ const Chat = () => {
   return (
     <>
       <UpperChatList>
-        {chatList.map((chat) => 
+        {chatList.map((chat) => (
           <Chatting key={chat.time} me={chat.me}>
             {chat.chat}
           </Chatting>
-        )}
+        ))}
       </UpperChatList>
       <UpperDoChat>
         <Form onSubmit={handleSubmit(sendMessage)}>
           <Input {...register("msg")} placeholder="send message" />
         </Form>
         <UpperGetReadyBtn>
-          {isStart ?
+          {isStart ? (
             "Game in progress"
-            :
-            imReady ? 
-              <GetReadyBtn bgColor={"#44bd32"} onClick={sendGetReady}>
-                Im Ready!
-              </GetReadyBtn>
-              :
-              <GetReadyBtn bgColor={"#95afc0"} onClick={sendGetReady}>
-                Get Ready
-              </GetReadyBtn>
-          }
+          ) : imReady ? (
+            <GetReadyBtn bgColor={"#44bd32"} onClick={sendGetReady}>
+              Im Ready!
+            </GetReadyBtn>
+          ) : (
+            <GetReadyBtn bgColor={"#95afc0"} onClick={sendGetReady}>
+              Get Ready
+            </GetReadyBtn>
+          )}
         </UpperGetReadyBtn>
       </UpperDoChat>
     </>
-  )
-}
+  );
+};
 
 export default Chat;
 
@@ -98,13 +97,13 @@ const UpperChatList = styled.div`
     bottom: 0px;
   }
 `;
-const Chatting = styled.div<{me: boolean}>`
-  max-width:  80%;
+const Chatting = styled.div<{ me: boolean }>`
+  max-width: 80%;
   border: 1px solid black;
   border-radius: 8px;
   padding: 10px;
-  margin-left: ${prop => prop.me ? "auto" : "10px" };
-  margin-right: ${prop => prop.me ? "10px" : "auto" };
+  margin-left: ${(prop) => (prop.me ? "auto" : "10px")};
+  margin-right: ${(prop) => (prop.me ? "10px" : "auto")};
   word-wrap: break-word;
   text-align: center;
   position: relative;
@@ -134,9 +133,9 @@ const GetReadyBtn = styled.button<{ bgColor: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2mm ridge rgba(211, 220, 50, .6);
+  border: 2mm ridge rgba(211, 220, 50, 0.6);
   border-radius: 10px;
-  background-color: ${prop => prop.bgColor};
+  background-color: ${(prop) => prop.bgColor};
   box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
   font-size: 1.4em;
   cursor: pointer;

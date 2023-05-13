@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../lib/socketIo";
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Match = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const Match = () => {
 
   const enterTheRoom = () => {
     const { roomName } = getValues();
-    socket.emit("enterRoom", roomName, (canGo: boolean)=>{
+    socket.emit("enterRoom", roomName, (canGo: boolean) => {
       if (canGo) {
         navigate(`room/${roomName}`);
       } else {
@@ -20,14 +20,12 @@ const Match = () => {
   };
   return (
     <UpperMatch>
-      <Description>
-        Create or Join the Room!
-      </Description>
+      <Description>Create or Join the Room!</Description>
       <form onSubmit={handleSubmit(enterTheRoom)}>
         <Input {...register("roomName")} placeholder="Room Name" />
       </form>
     </UpperMatch>
-  )
+  );
 };
 
 export default Match;
