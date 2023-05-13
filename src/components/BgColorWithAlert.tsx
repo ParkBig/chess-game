@@ -198,8 +198,7 @@ const RematchBtn = styled.button<{ bgColor: string }>`
   height: 50px;
   border-radius: 10px;
   background-color: ${(prop) => prop.bgColor};
-  background-image: url(${(prop) =>
-    prop.bgColor === "green" ? reGameBg : ggBg});
+  background-image: url(${(prop) => prop.bgColor === "green" ? reGameBg : ggBg});
   background-size: cover;
   color: #d2dae2;
   font-size: 1.2em;
