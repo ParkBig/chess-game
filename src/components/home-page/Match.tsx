@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { socket } from "../lib/socketIo";
+import { socket } from "../../utils/socketIo";
 import styled from "styled-components";
 
 const Match = () => {
@@ -49,12 +49,12 @@ const Description = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 1.7em;
+  font-size: var(--size-7);
 `;
 const Input = styled.input`
   height: 60px;
   width: 320px;
   border-radius: 10px;
   text-align: center;
-  font-size: 1.2em;
+  font-size: var(--size-5);
 `;

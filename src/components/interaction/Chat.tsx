@@ -1,24 +1,16 @@
+import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { ChatList } from "../../types/interface";
+import { socket } from "../../utils/socketIo";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { ChatList } from "../types/interface";
-import { socket } from "../lib/socketIo";
-import useUserState from "../store/useUserState";
-import useGameState from "../store/useGameState";
 
-import chatBGImg from "../assets/png/chatBGImg.png";
+import chatBGImg from "../../assets/png/chatBGImg.png";
 
 const Chat = () => {
   const { roomName } = useParams();
   const [chatList, setChatList] = useState<ChatList[]>([]);
   const { register, handleSubmit, getValues, setValue } = useForm();
-  const { imReady, setImReady } = useUserState();
-  const isStart = useGameState((state) => state.isStart);
-
-  const sendGetReady = () => {
-    socket.emit("send_getReady", { roomName, isReady: !imReady }, setImReady);
-  };
 
   const sendMessage = () => {
     const { msg } = getValues();
@@ -49,24 +41,9 @@ const Chat = () => {
           </Chatting>
         ))}
       </UpperChatList>
-      <UpperDoChat>
-        <Form onSubmit={handleSubmit(sendMessage)}>
-          <Input {...register("msg")} placeholder="send message" />
-        </Form>
-        <UpperGetReadyBtn>
-          {isStart ? (
-            "Game in progress"
-          ) : imReady ? (
-            <GetReadyBtn bgColor={"#44bd32"} onClick={sendGetReady}>
-              Im Ready!
-            </GetReadyBtn>
-          ) : (
-            <GetReadyBtn bgColor={"#95afc0"} onClick={sendGetReady}>
-              Get Ready
-            </GetReadyBtn>
-          )}
-        </UpperGetReadyBtn>
-      </UpperDoChat>
+      <Form onSubmit={handleSubmit(sendMessage)}>
+        <Input {...register("msg")} placeholder="send message" />
+      </Form>
     </>
   );
 };
@@ -75,7 +52,7 @@ export default Chat;
 
 const UpperChatList = styled.div`
   width: 100%;
-  height: 80%;
+  height: 70%;
   padding-bottom: 5%;
   display: flex;
   flex-direction: column;
@@ -110,46 +87,17 @@ const Chatting = styled.div<{ me: boolean }>`
   background-color: #ecf0f1;
 `;
 
-const UpperDoChat = styled.div`
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(rgb(106, 176, 76), rgb(87, 96, 111));
-`;
-const UpperGetReadyBtn = styled.div`
-  width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.4em;
-`;
-const GetReadyBtn = styled.button<{ bgColor: string }>`
-  width: 80%;
-  height: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2mm ridge rgba(211, 220, 50, 0.6);
-  border-radius: 10px;
-  background-color: ${(prop) => prop.bgColor};
-  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
-  font-size: 1.4em;
-  cursor: pointer;
-`;
 const Form = styled.form`
   width: 100%;
-  height: 50%;
+  height: 15%;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 5px solid #3c6382;
-  border-radius: 20px;
+  background-color: var(--color-green-500);
   gap: 3%;
 `;
+
 const Input = styled.input`
   width: 90%;
   height: 60px;

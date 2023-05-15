@@ -1,23 +1,22 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { socket } from "../lib/socketIo";
+import { useParams } from "react-router-dom";
+import { socket } from "../utils/socketIo";
 import { Player } from "../types/interface";
-import { history } from "../lib/history";
+import { history } from "../utils/history";
 import useBoardList from "../store/useBoardList";
 import styled from "styled-components";
-import Chat from "../components/Chat";
-import Chess from "../components/Chess";
-import boardList from "../lib/boardList";
-import BgColorWithAlert from "../components/BgColorWithAlert";
+import boardList from "../utils/boardList";
 import useUserState from "../store/useUserState";
 import useGameState from "../store/useGameState";
 
 import roomPageBg from "../assets/png/roomPageBg.png";
 import { Helmet } from "react-helmet-async";
+import TurnNoticeAndAlert from "../components/ui/TurnNoticeAndAlert";
+import Chess from "../components/chess/Chess";
+import Interaction from "../components/interaction/Interaction";
 
 const RoomPage = () => {
   const { roomName } = useParams();
-  const navigate = useNavigate();
   const { setBoard, setGotCha } = useBoardList();
   const { im, imReady, setIm, setImReady } = useUserState();
   const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert } =
@@ -94,11 +93,11 @@ const RoomPage = () => {
         <title>chess | room {roomName}</title>
       </Helmet>
       <ChessArea turn={nowTurn}>
-        <BgColorWithAlert />
+        <TurnNoticeAndAlert />
         <Chess />
       </ChessArea>
       <ChatArea>
-        <Chat />
+        <Interaction />
       </ChatArea>
     </Wrap>
   );

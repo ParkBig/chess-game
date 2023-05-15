@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Match from "../components/Match";
+import Match from "../components/home-page/Match";
 import { Helmet } from "react-helmet-async";
 
 import chessBGImg from "../assets/png/chessBGImg.png";
