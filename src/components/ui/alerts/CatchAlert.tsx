@@ -1,7 +1,7 @@
 import styled from "styled-components";
-
-import alertImg from "../../../assets/png/alertImg.png";
 import useBoardList from "../../../store/useBoardList";
+
+import alertImg from "../../../assets/background/alertImg.png";
 
 const CatchAlert = () => {
   const { gotcha } = useBoardList();

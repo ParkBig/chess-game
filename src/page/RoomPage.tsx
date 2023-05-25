@@ -8,12 +8,12 @@ import styled from "styled-components";
 import boardList from "../utils/boardList";
 import useUserState from "../store/useUserState";
 import useGameState from "../store/useGameState";
-
-import roomPageBg from "../assets/png/roomPageBg.png";
 import { Helmet } from "react-helmet-async";
 import TurnNoticeAndAlert from "../components/ui/TurnNoticeAndAlert";
 import Chess from "../components/chess/Chess";
 import Interaction from "../components/interaction/Interaction";
+
+import roomPageBg from "../assets/background/roomPageBg.png";
 
 const RoomPage = () => {
   const { roomName } = useParams();

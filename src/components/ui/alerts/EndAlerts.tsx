@@ -6,9 +6,9 @@ import useGameState from "../../../store/useGameState";
 import { socket } from "../../../utils/socketIo";
 import boardList from "../../../utils/boardList";
 
-import craftChess from "../../../assets/png/craftChess.png";
-import reGameBg from "../../../assets/png/reGameBg.png";
-import ggBg from "../../../assets/png/ggBg.png";
+import craftChess from "../../../assets/background/craftChess.png";
+import reGameBg from "../../../assets/background/reGameBg.png";
+import ggBg from "../../../assets/background/ggBg.png";
 
 const EndAlerts = () => {
   const navigate = useNavigate();
@@ -123,8 +123,7 @@ const RematchBtn = styled.button<{ bgColor: string }>`
   height: 50px;
   border-radius: 10px;
   background-color: ${(prop) => prop.bgColor};
-  background-image: url(${(prop) =>
-    prop.bgColor === "green" ? reGameBg : ggBg});
+  background-image: url(${(prop) => prop.bgColor === "green" ? reGameBg : ggBg});
   background-size: cover;
   color: #d2dae2;
   font-size: var(--size-5);

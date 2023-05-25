@@ -24,6 +24,7 @@ const Chess = () => {
       socket.off("picked-index");
     };
   }, []);
+
   return (
     <Wrap length={window.innerHeight}>
       {board.map((boardBlock, index) => (

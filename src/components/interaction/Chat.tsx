@@ -5,7 +5,7 @@ import { socket } from "../../utils/socketIo";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
-import chatBGImg from "../../assets/png/chatBGImg.png";
+import chatBGImg from "../../assets/background/chatBGImg.png";
 
 const Chat = () => {
   const { roomName } = useParams();
