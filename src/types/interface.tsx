@@ -31,10 +31,13 @@ export interface UseBoardList {
 }
 
 export interface UseUserState {
-  im: Player | "";
-  imReady: boolean;
-  setIm: (player: Player) => void;
-  setImReady: (force?: Force) => void;
+  myInfo: MyInfo;
+  allLoginInfo: Players;
+  setMyPlayerNum: (player: Player) => void;
+  setMyReady: (force?: Force) => void;
+  setMyIsInGame: (boolean: boolean) => void;
+  setMyLogInInfo: (nickname: string, password: string) => void
+  setAllLoginInfo: (opponentInfo: Players) => void
 }
 
 export interface UseGameState {
@@ -78,3 +81,35 @@ type GameAlert = {
   onAlert: boolean;
   alertDetail: string;
 };
+
+type LoginState = {
+  anyErr: boolean;
+  isLogin : boolean;
+  nickname : string;
+  win : number;
+  lose : number;
+}
+
+type MyInfo = {
+  loginInfo: LoginInfo;
+  gameInfo: GameInfo;
+}
+
+type LoginInfo = {
+  anyErr: boolean;
+  isLogin : boolean;
+  nickname : string;
+  win : number;
+  lose : number;
+}
+
+type GameInfo = {
+  playerNum: Player | "";
+  imReady: boolean;
+  isInGame: boolean;
+}
+
+type Players = {
+  "player-1": LoginState | null;
+  "player-2": LoginState | null;
+}

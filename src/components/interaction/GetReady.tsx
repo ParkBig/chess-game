@@ -7,17 +7,17 @@ import { socket } from "../../utils/socketIo";
 const GetReady = () => {
   const { roomName } = useParams();
   const { isStart } = useGameState();
-  const { imReady, setImReady } = useUserState();
+  const { myInfo, setMyReady } = useUserState();
 
   const sendGetReady = () => {
-    socket.emit("send_getReady", { roomName, isReady: !imReady }, setImReady);
+    socket.emit("send_getReady", { roomName, isReady: !myInfo.gameInfo.imReady }, setMyReady);
   };
 
   return (
     <UpperGetReadyBtn>
       {isStart ? (
         "Game in progress"
-      ) : imReady ? (
+      ) : myInfo.gameInfo.imReady ? (
         <GetReadyBtn bgColor={"#44bd32"} onClick={sendGetReady}>
           Im Ready!
         </GetReadyBtn>
