@@ -29,11 +29,11 @@ const Wrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid gray;
-  border-top: none;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  margin-top: 10px;
+  border: 2px solid var(--color-grey-700);
+  border-radius: 15px;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
+  background-color: var(--color-white-100);
 `;
 const Id = styled.div`
   width: 50%;

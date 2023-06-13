@@ -36,8 +36,9 @@ export interface UseUserState {
   setMyPlayerNum: (player: Player) => void;
   setMyReady: (force?: Force) => void;
   setMyIsInGame: (boolean: boolean) => void;
-  setMyLogInInfo: (nickname: string, password: string) => void
-  setAllLoginInfo: (opponentInfo: Players) => void
+  setMyLogInInfo: (nickname: string, password: string) => void;
+  setMyOdds: (isWin: boolean) => void;
+  setAllLoginInfo: (opponentInfo: Players) => void;
 }
 
 export interface UseGameState {

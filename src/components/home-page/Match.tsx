@@ -50,7 +50,7 @@ const UpperMatch = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background: var(--color-grey-300);
+  background: var(--color-green-300);
   border-radius: 15px;
   box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
 `;

@@ -19,13 +19,8 @@ const RoomPage = () => {
   const navigate = useNavigate();
   const { roomName } = useParams();
   const { gotcha, setBoard, setGotCha } = useBoardList();
-  const {
-    myInfo,
-    setMyPlayerNum,
-    setMyReady,
-    setMyIsInGame,
-    setAllLoginInfo,
-  } = useUserState();
+  const { myInfo, setMyOdds, setMyPlayerNum, setMyReady, setMyIsInGame, setAllLoginInfo } =
+    useUserState();
   const { isStart, nowTurn, setIsStart, setNowTurn, setGameAlert } =
     useGameState();
 
@@ -39,28 +34,30 @@ const RoomPage = () => {
   };
 
   useEffect(() => {
-    if (!myInfo.gameInfo.isInGame) {
-      socket.emit("when-reload-page", { roomName }, navigate);
-    } else {
-      if (myInfo.loginInfo.isLogin) {
-        if (gotcha.got && gotcha.chessmenType === "king") {
-          if (gotcha.caughtChessColor === "black") {
-            if (myInfo.gameInfo.playerNum === "player-1") {
-              // 내가 이김
-            } else {
-              // 내가 짐
-            }
+    if (myInfo.loginInfo.isLogin) {
+      if (gotcha.got && gotcha.chessmenType === "king") {
+        if (gotcha.caughtChessColor === "black") {
+          if (myInfo.gameInfo.playerNum === "player-1") {
+            setMyOdds(true);
+          } else {
+            setMyOdds(false)
           }
-          if (gotcha.caughtChessColor === "white") {
-            if (myInfo.gameInfo.playerNum === "player-1") {
-              // 내가 짐
-            } else {
-              // 내가 이김
-            }
+        }
+        if (gotcha.caughtChessColor === "white") {
+          if (myInfo.gameInfo.playerNum === "player-1") {
+            setMyOdds(false)
+          } else {
+            setMyOdds(true);
           }
         }
       }
+    }
+  }, [gotcha.got]);
 
+  useEffect(() => {
+    if (!myInfo.gameInfo.isInGame) {
+      socket.emit("when-reload-page", { roomName }, navigate);
+    } else {
       socket.emit("board-setting", roomName, (player: Player) => {
         setMyPlayerNum(player);
         const boardSetting = boardList(player);

@@ -34,7 +34,7 @@ export default GetReady;
 
 const UpperGetReadyBtn = styled.div`
   width: 100%;
-  height: 15%;
+  height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;

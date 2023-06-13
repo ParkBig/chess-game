@@ -55,12 +55,9 @@ const useUserState = create(
     },
     setMyLogInInfo: async (nickname, password) => {
       try {
-        const data = {
-          nickname,
-          password,
-        };
+        const data = { nickname,password };
         const response = await fetch(
-          `${process.env.REACT_APP_DEV_SERVER_URL}/login`,
+          `${process.env.REACT_APP_SERVER_URL}/login`,
           {
             method: "POST",
             headers: {
@@ -70,6 +67,7 @@ const useUserState = create(
           }
         );
         const loginData = await response.json();
+        localStorage.setItem("_id", loginData.data._id);
         set((state) => {
           state.myInfo.loginInfo = {
             anyErr: false,
@@ -79,6 +77,31 @@ const useUserState = create(
             lose: loginData.data.lose,
           };
         });
+      } catch (err) {
+        set((state) => {
+          state.myInfo.loginInfo.anyErr = true;
+        });
+      }
+    },
+    setMyOdds: async (isWin) => {
+      try {
+        const data = {
+          _id: localStorage.getItem("_id") as string,
+          isWin
+        };
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/gameResult`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const resData = await response.json();
+        const { win, lose }  = resData.data;
+        set((state) => {
+          state.myInfo.loginInfo.win = win;
+          state.myInfo.loginInfo.lose = lose;
+        })
       } catch (err) {
         set((state) => {
           state.myInfo.loginInfo.anyErr = true;

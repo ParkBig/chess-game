@@ -11,12 +11,11 @@ const LoginForm = () => {
   };
 
   return (
-    <Form isMatch={false} onSubmit={handleSubmit(loginSign)}>
+    <Form onSubmit={handleSubmit(loginSign)}>
       <InputArea>
         <Input
           {...register("nickname", { required: true, maxLength: 8 })}
-          isMatch={false}
-          placeholder="ID"
+          placeholder="ID(max 8)"
         />
         <Input
           {...register("password", {
@@ -25,15 +24,12 @@ const LoginForm = () => {
             minLength: 3,
           })}
           type="password"
-          isMatch={false}
-          placeholder="Password"
+          placeholder="Password(3 ~ 12)"
         />
       </InputArea>
       <BtnArea>
         Log In <br />
-        or
-        <br />
-        sign Up
+        <Span>(없으면 자동가입)</Span>
       </BtnArea>
     </Form>
   );
@@ -41,27 +37,29 @@ const LoginForm = () => {
 
 export default LoginForm;
 
-const Form = styled.form<{ isMatch: boolean }>`
-  width: 100%;
+const Form = styled.form`
+  width: 95%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${(prop) => (prop.isMatch ? "10px 0 30px 0" : "15px")};
-  border-radius: ${(prop) => (prop.isMatch ? "15px" : "none")};
-  border-bottom: ${(prop) => (prop.isMatch ? "2px solid gray" : "none")};
+  padding: 15px 30px 15px 30px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom: 2px solid var(--color-grey-700);
+  background-color: var(--color-white-100);
 `;
-const Input = styled.input<{ isMatch: boolean }>`
-  height: ${(prop) => (prop.isMatch ? "60px" : "30px")};
-  width: 80%;
+const Input = styled.input`
+  height: 30px;
+  width: 90%;
   border-radius: 10px;
   text-align: center;
-  font-size: ${(prop) => (prop.isMatch ? "var(--size-5)" : "var(--size-4)")};
+  font-size: var(--size-3);
 `;
 const InputArea = styled.div`
   width: 70%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
   flex-direction: column;
   gap: 10px;
 `;
@@ -71,4 +69,7 @@ const BtnArea = styled.button`
   border: 1px solid;
   border-radius: 10px;
   cursor: pointer;
+`;
+const Span = styled.span`
+  font-size: var(--size-2);
 `;

@@ -86,6 +86,7 @@ const GlobalStyle = createGlobalStyle`
     --color-primary-700: #3d0264;
 
     --color-green-100: #FFF8DE;
+    --color-green-300: #84A7A1;
     --color-green-500: #99A98F;
 
     --color-success-100: #a2f0bc;
@@ -93,6 +94,8 @@ const GlobalStyle = createGlobalStyle`
 
     --color-error-100: #f1acc9;
     --color-error-500: #a10c4a;
+
+    --color-white-100: #EEE2DE;
 
     --size-1: 0.25rem;
     --size-2: 0.5rem;
