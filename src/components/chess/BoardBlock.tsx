@@ -8,13 +8,13 @@ import Chessman from "./Chessman";
 import CanMoveArea from "./CanMoveArea";
 
 const BoardBlock = ({ boardBlock, index }: BoardsBlock) => {
-  const im = useUserState((state) => state.im);
+  const { myInfo } = useUserState();
   const { nowTurn } = useGameState();
   const { isBlockPick, canMoveArea } = useBoardList();
 
   return (
     <Area isColor={boardBlock.color}>
-      {isBlockPick.isPick && canMoveArea.includes(index) && im === nowTurn && (
+      {isBlockPick.isPick && canMoveArea.includes(index) && myInfo.gameInfo.playerNum === nowTurn && (
         <CanMoveArea index={index} />
       )}
       {boardBlock.chessmenType && (

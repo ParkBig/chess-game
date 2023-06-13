@@ -22,7 +22,7 @@ import blackRook from "../../assets/chessman/black-rook.png";
 
 const Chessman = ({ boardBlock, index }: BoardsBlock) => {
   const { roomName } = useParams();
-  const { im } = useUserState();
+  const { myInfo } = useUserState();
   const { nowTurn, isStart, setGameAlert } = useGameState();
   const { board, setIsBlockPick, setCanMoveArea } = useBoardList();
 
@@ -31,7 +31,7 @@ const Chessman = ({ boardBlock, index }: BoardsBlock) => {
       setGameAlert("아직 전부 준비되지 않았습니다.");
       return;
     }
-    if (im === nowTurn) {
+    if (myInfo.gameInfo.playerNum === nowTurn) {
       setCanMoveArea(siftChessmenToMove(index, board));
       socket.emit(
         "block-pick",

@@ -13,7 +13,7 @@ import ggBg from "../../../assets/background/ggBg.png";
 const EndAlerts = () => {
   const navigate = useNavigate();
   const { roomName } = useParams();
-  const { im, setImReady } = useUserState();
+  const { myInfo, setMyIsInGame, setMyReady } = useUserState();
   const { gotcha, setGotCha, setBoard } = useBoardList();
   const { setIsStart, setNowTurn } = useGameState();
 
@@ -21,10 +21,10 @@ const EndAlerts = () => {
     socket.emit("leave-or-initialize-room", { roomName, state: "initialize" });
     setNowTurn("player-1");
     setIsStart("false");
-    setImReady("false");
+    setMyReady("false");
     setGotCha();
-    if (im) {
-      const boardSetting = boardList(im);
+    if (myInfo.gameInfo.playerNum) {
+      const boardSetting = boardList(myInfo.gameInfo.playerNum);
       setBoard(boardSetting);
     }
   };
@@ -36,6 +36,7 @@ const EndAlerts = () => {
       navigate
     );
     setIsStart("false");
+    setMyIsInGame(false);
     setGotCha();
   };
 

@@ -33,7 +33,7 @@ const Chat = () => {
     };
   }, []);
   return (
-    <>
+    <Wrap>
       <UpperChatList>
         {chatList.map((chat) => (
           <Chatting key={chat.time} me={chat.me}>
@@ -44,21 +44,29 @@ const Chat = () => {
       <Form onSubmit={handleSubmit(sendMessage)}>
         <Input {...register("msg")} placeholder="send message" />
       </Form>
-    </>
+    </Wrap>
   );
 };
 
 export default Chat;
 
+const Wrap = styled.div`
+  height: 73%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-green-500);
+`;
 const UpperChatList = styled.div`
   width: 100%;
-  height: 70%;
+  height: 85%;
   padding-bottom: 5%;
   display: flex;
   flex-direction: column;
   justify-content: end;
   align-items: center;
   border-bottom: 2px solid #3c6382;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   gap: 10px;
   position: relative;
 
