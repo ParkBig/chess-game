@@ -1,26 +1,30 @@
-import styled from 'styled-components';
-import useGameState from '../../store/useGameState';
-import useBoardList from '../../store/useBoardList';
-import siftChessmenToMove from '../../utils/siftChessmenToMove';
-import { socket } from '../../utils/socketIo';
-import useUserState from '../../store/useUserState';
 import { useParams } from 'react-router-dom';
-import { BoardsBlock } from '../../types/interface';
+import { BoardsBlock } from 'types/interface';
+import useUserState from 'store/useUserState';
+import useGameState from 'store/useGameState';
+import useBoardList from 'store/useBoardList';
+import siftChessmenToMove from 'utils/siftChessmenToMove';
+import { socket } from 'utils/socketIo';
+import { css } from '@emotion/react';
 
-import whiteBishop from '../../assets/chessman/white-bishop.png';
-import whiteKing from '../../assets/chessman/white-king.png';
-import whiteKnight from '../../assets/chessman/white-knight.png';
-import whitePawn from '../../assets/chessman/white-pawn.png';
-import whiteQueen from '../../assets/chessman/white-queen.png';
-import whiteRook from '../../assets/chessman/white-rook.png';
-import blackBishop from '../../assets/chessman/black-bishop.png';
-import blackKing from '../../assets/chessman/black-king.png';
-import blackKnight from '../../assets/chessman/black-knight.png';
-import blackPawn from '../../assets/chessman/black-pawn.png';
-import blackQueen from '../../assets/chessman/black-queen.png';
-import blackRook from '../../assets/chessman/black-rook.png';
+import whiteBishop from 'assets/chessman/white-bishop.png';
+import whiteKing from 'assets/chessman/white-king.png';
+import whiteKnight from 'assets/chessman/white-knight.png';
+import whitePawn from 'assets/chessman/white-pawn.png';
+import whiteQueen from 'assets/chessman/white-queen.png';
+import whiteRook from 'assets/chessman/white-rook.png';
+import blackBishop from 'assets/chessman/black-bishop.png';
+import blackKing from 'assets/chessman/black-king.png';
+import blackKnight from 'assets/chessman/black-knight.png';
+import blackPawn from 'assets/chessman/black-pawn.png';
+import blackQueen from 'assets/chessman/black-queen.png';
+import blackRook from 'assets/chessman/black-rook.png';
 
-const Chessman = ({ boardBlock, index }: BoardsBlock) => {
+interface ChessmanImgProps {
+  myChess: boolean | null;
+}
+
+export default function Chessman({ boardBlock, index }: BoardsBlock) {
   const { roomName } = useParams();
   const { myInfo } = useUserState();
   const { nowTurn, isStart, setGameAlert } = useGameState();
@@ -38,9 +42,9 @@ const Chessman = ({ boardBlock, index }: BoardsBlock) => {
   };
 
   return (
-    <ChessmanImg
+    <img
+      css={chessmanImg({ myChess: boardBlock.isMyChessmen })}
       onClick={blockPick}
-      $myChess={boardBlock.isMyChessmen}
       src={
         boardBlock.chessColor === 'white'
           ? boardBlock.chessmenType === 'bishop'
@@ -74,16 +78,14 @@ const Chessman = ({ boardBlock, index }: BoardsBlock) => {
       }
     />
   );
-};
+}
 
-export default Chessman;
-
-const ChessmanImg = styled.img<{ $myChess: boolean | null }>`
+const chessmanImg = (props: ChessmanImgProps) => css`
   width: 60%;
   height: 60%;
   position: absolute;
   z-index: 200;
-  pointer-events: ${prop => (prop.$myChess ? null : 'none')};
+  pointer-events: ${props.myChess ? null : 'none'};
   cursor: pointer;
 
   &:hover {

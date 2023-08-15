@@ -1,25 +1,27 @@
-import styled from 'styled-components';
-import { socket } from '../../utils/socketIo';
 import { useParams } from 'react-router-dom';
-import useGameState from '../../store/useGameState';
-import useBoardList from '../../store/useBoardList';
+import { css } from '@emotion/react';
+import useGameState from 'store/useGameState';
+import useBoardList from 'store/useBoardList';
+import { socket } from 'utils/socketIo';
 
-const CanMoveArea = ({ index }: { index: number }) => {
+interface Props {
+  index: number;
+}
+
+export default function CanMoveArea(props: Props) {
   const { roomName } = useParams();
   const { setNowTurn } = useGameState();
   const { chessMove } = useBoardList();
 
   const moveTo = () => {
-    socket.emit('request-move', { roomName, targetIndex: index }, chessMove);
+    socket.emit('request-move', { roomName, targetIndex: props.index }, chessMove);
     setNowTurn();
   };
 
-  return <MoveArea onClick={moveTo} />;
-};
+  return <div css={moveArea} onClick={moveTo} />;
+}
 
-export default CanMoveArea;
-
-const MoveArea = styled.div`
+const moveArea = css`
   width: 70%;
   height: 70%;
   border-radius: 50px;

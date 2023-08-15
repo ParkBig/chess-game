@@ -1,17 +1,15 @@
-import styled from 'styled-components';
-import useGameState from '../../../store/useGameState';
+import { css } from '@emotion/react';
+import useGameState from 'store/useGameState';
 
-import alertImg from '../../../assets/background/alertImg.png';
+import alertImg from 'assets/background/alertImg.png';
 
-const GameAlert = () => {
+export default function GameAlert() {
   const { gameAlert } = useGameState();
 
-  return <Modal>{gameAlert.alertDetail}</Modal>;
-};
+  return <div css={modal}>{gameAlert.alertDetail}</div>;
+}
 
-export default GameAlert;
-
-const Modal = styled.div`
+const modal = css`
   border: 5px solid gold;
   border-radius: 10px;
   padding: 40px 80px 40px 80px;

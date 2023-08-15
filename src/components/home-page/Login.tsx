@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import { useState } from 'react';
-import useUserState from '../../store/useUserState';
-import LoginForm from './LoginForm';
+import { css } from '@emotion/react';
+import useUserState from 'store/useUserState';
 import LoginInfo from './LoginInfo';
+import LoginForm from './LoginForm';
 
-const Login = () => {
+export default function Login() {
   const [openLogin, setOpenLogin] = useState(false);
   const { myInfo } = useUserState();
 
@@ -13,18 +13,16 @@ const Login = () => {
   };
 
   return (
-    <UpperLogin>
+    <div css={wrap}>
       {myInfo.loginInfo.isLogin ? <LoginInfo /> : openLogin ? <LoginForm /> : null}
-      <OpenLogin onClick={toggleLogin}>
+      <div css={toggleOpenLogin} onClick={toggleLogin}>
         {!myInfo.loginInfo.isLogin ? (openLogin ? 'Close' : 'Want a Log in?!') : null}
-      </OpenLogin>
-    </UpperLogin>
+      </div>
+    </div>
   );
-};
+}
 
-export default Login;
-
-const UpperLogin = styled.div`
+const wrap = css`
   height: auto;
   width: 100%;
   display: flex;
@@ -32,7 +30,7 @@ const UpperLogin = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const OpenLogin = styled.div`
+const toggleOpenLogin = css`
   margin: 5px;
   cursor: pointer;
 `;

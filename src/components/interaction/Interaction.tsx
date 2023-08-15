@@ -2,7 +2,7 @@ import Chat from './Chat';
 import GetReady from './GetReady';
 import UserInfo from './UserInfo';
 
-const Interaction = () => {
+export default function Interaction() {
   return (
     <>
       <UserInfo me={true} />
@@ -11,6 +11,4 @@ const Interaction = () => {
       <GetReady />
     </>
   );
-};
-
-export default Interaction;
+}

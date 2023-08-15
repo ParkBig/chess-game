@@ -1,13 +1,13 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { ChatList } from '../../types/interface';
-import { socket } from '../../utils/socketIo';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { css } from '@emotion/react';
+import { ChatList } from 'types/interface';
+import { socket } from 'utils/socketIo';
 
-import chatBGImg from '../../assets/background/chatBGImg.png';
+import chatBGImg from 'assets/background/chatBGImg.png';
 
-const Chat = () => {
+export default function Chat() {
   const { roomName } = useParams();
   const [chatList, setChatList] = useState<ChatList[]>([]);
   const { register, handleSubmit, getValues, setValue } = useForm();
@@ -33,30 +33,28 @@ const Chat = () => {
     };
   }, []);
   return (
-    <Wrap>
-      <UpperChatList>
+    <div css={wrap}>
+      <div css={upperChatList}>
         {chatList.map(chat => (
-          <Chatting key={chat.time} me={chat.me}>
+          <div css={chatting({ me: chat.me })} key={chat.time}>
             {chat.chat}
-          </Chatting>
+          </div>
         ))}
-      </UpperChatList>
-      <Form onSubmit={handleSubmit(sendMessage)}>
-        <Input {...register('msg')} placeholder="send message" />
-      </Form>
-    </Wrap>
+      </div>
+      <form css={form} onSubmit={handleSubmit(sendMessage)}>
+        <input css={input} {...register('msg')} placeholder="send message" />
+      </form>
+    </div>
   );
-};
+}
 
-export default Chat;
-
-const Wrap = styled.div`
+const wrap = css`
   height: 73%;
   display: flex;
   flex-direction: column;
   background-color: var(--color-green-500);
 `;
-const UpperChatList = styled.div`
+const upperChatList = css`
   width: 100%;
   height: 85%;
   padding-bottom: 5%;
@@ -82,20 +80,20 @@ const UpperChatList = styled.div`
     bottom: 0px;
   }
 `;
-const Chatting = styled.div<{ me: boolean }>`
+const chatting = (props: { me: boolean }) => css`
   max-width: 80%;
   border: 1px solid black;
   border-radius: 8px;
   padding: 10px;
-  margin-left: ${prop => (prop.me ? 'auto' : '10px')};
-  margin-right: ${prop => (prop.me ? '10px' : 'auto')};
+  margin-left: ${props.me ? 'auto' : '10px'};
+  margin-right: ${props.me ? '10px' : 'auto'};
   word-wrap: break-word;
   text-align: center;
   position: relative;
   background-color: #ecf0f1;
 `;
 
-const Form = styled.form`
+const form = css`
   width: 100%;
   height: 15%;
   display: flex;
@@ -106,7 +104,7 @@ const Form = styled.form`
   gap: 3%;
 `;
 
-const Input = styled.input`
+const input = css`
   width: 90%;
   height: 60px;
   border-radius: 10px;

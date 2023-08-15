@@ -1,11 +1,11 @@
-import useBoardList from '../../../store/useBoardList';
-import useGameState from '../../../store/useGameState';
 import GameAlert from './GameAlert';
 import CatchAlert from './CatchAlert';
 import { useEffect } from 'react';
+import useGameState from 'store/useGameState';
+import useBoardList from 'store/useBoardList';
 import EndAlerts from './EndAlerts';
 
-const Alert = () => {
+export default function Alert() {
   const { gotcha, setGotCha } = useBoardList();
   const { gameAlert, setIsStart, setGameAlert } = useGameState();
 
@@ -34,6 +34,4 @@ const Alert = () => {
       {gameAlert.onAlert ? <GameAlert /> : null}
     </>
   );
-};
-
-export default Alert;
+}

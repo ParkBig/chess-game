@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import useUserState from '../../store/useUserState';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
+import useUserState from 'store/useUserState';
 
-const LoginForm = () => {
+export default function LoginForm() {
   const { setMyLogInInfo } = useUserState();
   const { register, handleSubmit, getValues } = useForm();
 
@@ -11,8 +12,8 @@ const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(loginSign)}>
-      <InputArea>
+    <form css={form} onSubmit={handleSubmit(loginSign)}>
+      <div css={inputArea}>
         <Input {...register('nickname', { required: true, maxLength: 8 })} placeholder="ID(max 8)" />
         <Input
           {...register('password', {
@@ -23,18 +24,17 @@ const LoginForm = () => {
           type="password"
           placeholder="Password(3 ~ 12)"
         />
-      </InputArea>
-      <BtnArea>
-        Log In <br />
-        <Span>(없으면 자동가입)</Span>
-      </BtnArea>
-    </Form>
+      </div>
+      <button css={btnArea}>
+        <span>Log In</span>
+        <br />
+        <span css={span}>(없으면 자동가입)</span>
+      </button>
+    </form>
   );
-};
+}
 
-export default LoginForm;
-
-const Form = styled.form`
+const form = css`
   width: 95%;
   display: flex;
   justify-content: center;
@@ -52,7 +52,7 @@ const Input = styled.input`
   text-align: center;
   font-size: var(--size-3);
 `;
-const InputArea = styled.div`
+const inputArea = css`
   width: 70%;
   display: flex;
   justify-content: space-between;
@@ -60,13 +60,13 @@ const InputArea = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-const BtnArea = styled.button`
+const btnArea = css`
   width: 30%;
   padding: 10px 5px 10px 5px;
   border: 1px solid;
   border-radius: 10px;
   cursor: pointer;
 `;
-const Span = styled.span`
+const span = styled.span`
   font-size: var(--size-2);
 `;

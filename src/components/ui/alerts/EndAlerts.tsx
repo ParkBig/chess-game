@@ -1,16 +1,17 @@
-import styled from 'styled-components';
-import useBoardList from '../../../store/useBoardList';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useNavigate, useParams } from 'react-router-dom';
-import useUserState from '../../../store/useUserState';
-import useGameState from '../../../store/useGameState';
-import { socket } from '../../../utils/socketIo';
-import boardList from '../../../utils/boardList';
+import useUserState from 'store/useUserState';
+import useBoardList from 'store/useBoardList';
+import useGameState from 'store/useGameState';
+import { socket } from 'utils/socketIo';
+import boardList from 'utils/boardList';
 
-import craftChess from '../../../assets/background/craftChess.png';
-import reGameBg from '../../../assets/background/reGameBg.png';
-import ggBg from '../../../assets/background/ggBg.png';
+import craftChess from 'assets/background/craftChess.png';
+import reGameBg from 'assets/background/reGameBg.png';
+import ggBg from 'assets/background/ggBg.png';
 
-const EndAlerts = () => {
+export default function EndAlerts() {
   const navigate = useNavigate();
   const { roomName } = useParams();
   const { myInfo, setMyIsInGame, setMyReady } = useUserState();
@@ -38,7 +39,7 @@ const EndAlerts = () => {
 
   return (
     <>
-      <MatchResult>
+      <div css={matchResult}>
         {gotcha.caughtChessColor === 'black' ? (
           <>
             <UpperResult>
@@ -72,14 +73,12 @@ const EndAlerts = () => {
             </Rematch>
           </>
         )}
-      </MatchResult>
+      </div>
     </>
   );
-};
+}
 
-export default EndAlerts;
-
-const MatchResult = styled.div`
+const matchResult = css`
   width: 550px;
   height: 310px;
   border: 5px solid black;

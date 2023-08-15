@@ -1,11 +1,15 @@
-import { BoardsBlock } from '../../types/interface';
 import React from 'react';
-import styled from 'styled-components';
-import useBoardList from '../../store/useBoardList';
-import useUserState from '../../store/useUserState';
-import useGameState from '../../store/useGameState';
-import Chessman from './Chessman';
+import useBoardList from 'store/useBoardList';
+import useGameState from 'store/useGameState';
+import useUserState from 'store/useUserState';
 import CanMoveArea from './CanMoveArea';
+import Chessman from './Chessman';
+import { BoardsBlock } from 'types/interface';
+import { css } from '@emotion/react';
+
+interface WrapProps {
+  isColor: boolean;
+}
 
 const BoardBlock = ({ boardBlock, index }: BoardsBlock) => {
   const { myInfo } = useUserState();
@@ -13,25 +17,25 @@ const BoardBlock = ({ boardBlock, index }: BoardsBlock) => {
   const { isBlockPick, canMoveArea } = useBoardList();
 
   return (
-    <Area isColor={boardBlock.color}>
+    <div css={wrap({ isColor: boardBlock.color })}>
       {isBlockPick.isPick && canMoveArea.includes(index) && myInfo.gameInfo.playerNum === nowTurn && (
         <CanMoveArea index={index} />
       )}
       {boardBlock.chessmenType && <Chessman boardBlock={boardBlock} index={index} />}
-    </Area>
+    </div>
   );
 };
 
 export default React.memo(BoardBlock);
 
-const Area = styled.div<{ isColor: boolean }>`
+const wrap = (props: WrapProps) => css`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  background-color: ${prop => (prop.isColor ? '#353b48' : 'white')};
+  background-color: ${props.isColor ? '#353b48' : 'white'};
   position: relative;
   z-index: 100;
 `;

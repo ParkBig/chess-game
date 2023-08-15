@@ -1,26 +1,26 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { socket } from '../utils/socketIo';
-import { Player } from '../types/interface';
-import { history } from '../utils/history';
-import useBoardList from '../store/useBoardList';
-import styled from 'styled-components';
-import boardList from '../utils/boardList';
-import useUserState from '../store/useUserState';
-import useGameState from '../store/useGameState';
 import { Helmet } from 'react-helmet-async';
-import TurnNoticeAndAlert from '../components/ui/TurnNoticeAndAlert';
-import Chess from '../components/chess/Chess';
-import Interaction from '../components/interaction/Interaction';
+import { useNavigate, useParams } from 'react-router-dom';
+import { css } from '@emotion/react';
+import useBoardList from 'store/useBoardList';
+import useUserState from 'store/useUserState';
+import useGameState from 'store/useGameState';
+import { socket } from 'utils/socketIo';
+import { Player } from 'types/interface';
+import boardList from 'utils/boardList';
+import { history } from 'utils/history';
+import TurnNoticeAndAlert from 'components/ui/TurnNoticeAndAlert';
+import Chess from 'components/chess/Chess';
+import Interaction from 'components/interaction/Interaction';
 
-import roomPageBg from '../assets/background/roomPageBg.png';
+import roomPageBg from 'assets/background/roomPageBg.png';
 
-const RoomPage = () => {
+export default function RoomPage() {
   const navigate = useNavigate();
   const { roomName } = useParams();
   const { gotcha, setBoard, setGotCha } = useBoardList();
   const { myInfo, setMyOdds, setMyPlayerNum, setMyReady, setMyIsInGame, setAllLoginInfo } = useUserState();
-  const { nowTurn, setIsStart, setNowTurn, setGameAlert } = useGameState();
+  const { setIsStart, setNowTurn, setGameAlert } = useGameState();
 
   useEffect(() => {
     if (myInfo.loginInfo.isLogin) {
@@ -140,30 +140,28 @@ const RoomPage = () => {
     setNowTurn,
   ]);
   return (
-    <Wrap>
+    <div css={wrap}>
       <Helmet>
         <title>chess | room {roomName}</title>
       </Helmet>
-      <ChessArea turn={nowTurn}>
+      <div css={chessArea}>
         <TurnNoticeAndAlert />
         <Chess />
-      </ChessArea>
-      <ChatArea>
+      </div>
+      <div css={chatArea}>
         <Interaction />
-      </ChatArea>
-    </Wrap>
+      </div>
+    </div>
   );
-};
+}
 
-export default RoomPage;
-
-const Wrap = styled.div`
+const wrap = css`
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-const ChessArea = styled.div<{ turn: Player }>`
+const chessArea = css`
   width: 80%;
   height: 100%;
   display: flex;
@@ -173,7 +171,7 @@ const ChessArea = styled.div<{ turn: Player }>`
   background: url(${roomPageBg});
   background-size: cover;
 `;
-const ChatArea = styled.div`
+const chatArea = css`
   width: 20%;
   height: 100%;
   border-left: 5px solid #27ae60;

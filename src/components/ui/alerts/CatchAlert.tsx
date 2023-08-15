@@ -1,21 +1,19 @@
-import styled from 'styled-components';
-import useBoardList from '../../../store/useBoardList';
+import { css } from '@emotion/react';
+import useBoardList from 'store/useBoardList';
 
-import alertImg from '../../../assets/background/alertImg.png';
+import alertImg from 'assets/background/alertImg.png';
 
-const CatchAlert = () => {
+export default function CatchAlert() {
   const { gotcha } = useBoardList();
 
   return (
     <>
-      <Modal>{`${gotcha.caughtChessColor}의 ${gotcha.chessmenType}이 잡혔습니다!`}</Modal>
+      <div css={modal}>{`${gotcha.caughtChessColor}의 ${gotcha.chessmenType}이 잡혔습니다!`}</div>
     </>
   );
-};
+}
 
-export default CatchAlert;
-
-const Modal = styled.div`
+const modal = css`
   border: 5px solid gold;
   border-radius: 10px;
   padding: 40px 80px 40px 80px;

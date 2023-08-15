@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import useGameState from '../../store/useGameState';
-import useUserState from '../../store/useUserState';
 import { useParams } from 'react-router-dom';
-import { socket } from '../../utils/socketIo';
+import { css } from '@emotion/react';
+import useGameState from 'store/useGameState';
+import useUserState from 'store/useUserState';
+import { socket } from 'utils/socketIo';
 
-const GetReady = () => {
+export default function GetReady() {
   const { roomName } = useParams();
   const { isStart } = useGameState();
   const { myInfo, setMyReady } = useUserState();
@@ -14,25 +14,23 @@ const GetReady = () => {
   };
 
   return (
-    <UpperGetReadyBtn>
+    <div css={wrap}>
       {isStart ? (
         'Game in progress'
       ) : myInfo.gameInfo.imReady ? (
-        <GetReadyBtn bgColor={'#44bd32'} onClick={sendGetReady}>
+        <button css={getReadyBtn({ bgColor: '#44bd32' })} onClick={sendGetReady}>
           Im Ready!
-        </GetReadyBtn>
+        </button>
       ) : (
-        <GetReadyBtn bgColor={'#95afc0'} onClick={sendGetReady}>
+        <button css={getReadyBtn({ bgColor: '#95afc0' })} onClick={sendGetReady}>
           Get Ready
-        </GetReadyBtn>
+        </button>
       )}
-    </UpperGetReadyBtn>
+    </div>
   );
-};
+}
 
-export default GetReady;
-
-const UpperGetReadyBtn = styled.div`
+const wrap = css`
   width: 100%;
   height: 10%;
   display: flex;
@@ -48,7 +46,7 @@ const UpperGetReadyBtn = styled.div`
     rgb(238, 178, 0)
   );
 `;
-const GetReadyBtn = styled.button<{ bgColor: string }>`
+const getReadyBtn = (props: { bgColor: string }) => css`
   width: 80%;
   height: 70%;
   display: flex;
@@ -56,7 +54,7 @@ const GetReadyBtn = styled.button<{ bgColor: string }>`
   align-items: center;
   border: 2mm ridge rgba(211, 220, 50, 0.6);
   border-radius: 10px;
-  background-color: ${prop => prop.bgColor};
+  background-color: ${props.bgColor};
   box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.6);
   font-size: var(--size-4);
   cursor: pointer;

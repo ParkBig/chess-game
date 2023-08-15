@@ -1,11 +1,15 @@
-import styled from 'styled-components';
-import useUserState from '../../store/useUserState';
+import styled from '@emotion/styled';
+import useUserState from 'store/useUserState';
 
-const UserInfo = ({ me }: { me: boolean }) => {
+interface Props {
+  me: boolean;
+}
+
+export default function UserInfo(props: Props) {
   const { myInfo, allLoginInfo } = useUserState();
   const opponent = myInfo.gameInfo.playerNum === 'player-1' ? 'player-2' : 'player-1';
 
-  if (me) {
+  if (props.me) {
     return (
       <>
         {myInfo.loginInfo.isLogin ? (
@@ -54,9 +58,7 @@ const UserInfo = ({ me }: { me: boolean }) => {
       </>
     );
   }
-};
-
-export default UserInfo;
+}
 
 const Wrap = styled.div`
   width: 100%;

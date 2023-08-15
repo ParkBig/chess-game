@@ -1,23 +1,22 @@
-import styled from 'styled-components';
-import useUserState from '../../store/useUserState';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import useUserState from 'store/useUserState';
 
-const LoginInfo = () => {
+export default function LoginInfo() {
   const { myInfo } = useUserState();
 
   return (
-    <Wrap>
-      <Id>{myInfo.loginInfo.nickname}</Id>
-      <Rate>
+    <div css={wrap}>
+      <div css={id}>{myInfo.loginInfo.nickname}</div>
+      <div css={rate}>
         <Span isWin={true}>win: {myInfo.loginInfo.win}</Span>
         <Span isWin={false}>lose: {myInfo.loginInfo.lose}</Span>
-      </Rate>
-    </Wrap>
+      </div>
+    </div>
   );
-};
+}
 
-export default LoginInfo;
-
-const Wrap = styled.div`
+const wrap = css`
   width: 97%;
   height: 70px;
   display: flex;
@@ -29,14 +28,14 @@ const Wrap = styled.div`
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
   background-color: var(--color-white-100);
 `;
-const Id = styled.div`
+const id = css`
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: var(--size-6);
 `;
-const Rate = styled.div`
+const rate = css`
   width: 50%;
   display: flex;
   justify-content: center;
