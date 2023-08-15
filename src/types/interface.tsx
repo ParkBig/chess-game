@@ -50,22 +50,15 @@ export interface UseGameState {
   setGameAlert: (detail: string) => void;
 }
 
-export type Player = "player-1" | "player-2";
+export type Player = 'player-1' | 'player-2';
 
-export type ChessColor = "black" | "white" | null;
+export type ChessColor = 'black' | 'white' | null;
 
-export type Chessmen =
-  | "king"
-  | "queen"
-  | "rook"
-  | "bishop"
-  | "knight"
-  | "pawn"
-  | null;
+export type Chessmen = 'king' | 'queen' | 'rook' | 'bishop' | 'knight' | 'pawn' | null;
 
-export type Column = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
+export type Column = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h';
 
-type Force = "true" | "false";
+type Force = 'true' | 'false';
 
 type IsBlockPick = {
   isPick: boolean;
@@ -74,7 +67,7 @@ type IsBlockPick = {
 
 type Gotcha = {
   got: boolean;
-  caughtChessColor: "black" | "white" | null;
+  caughtChessColor: 'black' | 'white' | null;
   chessmenType: Chessmen;
 };
 
@@ -85,32 +78,32 @@ type GameAlert = {
 
 type LoginState = {
   anyErr: boolean;
-  isLogin : boolean;
-  nickname : string;
-  win : number;
-  lose : number;
-}
+  isLogin: boolean;
+  nickname: string;
+  win: number;
+  lose: number;
+};
 
 type MyInfo = {
   loginInfo: LoginInfo;
   gameInfo: GameInfo;
-}
+};
 
 type LoginInfo = {
   anyErr: boolean;
-  isLogin : boolean;
-  nickname : string;
-  win : number;
-  lose : number;
-}
+  isLogin: boolean;
+  nickname: string;
+  win: number;
+  lose: number;
+};
 
 type GameInfo = {
-  playerNum: Player | "";
+  playerNum: Player | '';
   imReady: boolean;
   isInGame: boolean;
-}
+};
 
 type Players = {
-  "player-1": LoginState | null;
-  "player-2": LoginState | null;
-}
+  'player-1': LoginState | null;
+  'player-2': LoginState | null;
+};

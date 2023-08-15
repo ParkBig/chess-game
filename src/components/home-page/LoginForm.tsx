@@ -1,24 +1,21 @@
-import { useForm } from "react-hook-form";
-import styled from "styled-components";
-import useUserState from "../../store/useUserState";
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+import useUserState from '../../store/useUserState';
 
 const LoginForm = () => {
   const { setMyLogInInfo } = useUserState();
   const { register, handleSubmit, getValues } = useForm();
 
   const loginSign = () => {
-    setMyLogInInfo(getValues("nickname"), getValues("password"));
+    setMyLogInInfo(getValues('nickname'), getValues('password'));
   };
 
   return (
     <Form onSubmit={handleSubmit(loginSign)}>
       <InputArea>
+        <Input {...register('nickname', { required: true, maxLength: 8 })} placeholder="ID(max 8)" />
         <Input
-          {...register("nickname", { required: true, maxLength: 8 })}
-          placeholder="ID(max 8)"
-        />
-        <Input
-          {...register("password", {
+          {...register('password', {
             required: true,
             maxLength: 12,
             minLength: 3,

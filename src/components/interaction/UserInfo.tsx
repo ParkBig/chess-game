@@ -1,10 +1,9 @@
-import styled from "styled-components";
-import useUserState from "../../store/useUserState";
+import styled from 'styled-components';
+import useUserState from '../../store/useUserState';
 
 const UserInfo = ({ me }: { me: boolean }) => {
   const { myInfo, allLoginInfo } = useUserState();
-  const opponent =
-    myInfo.gameInfo.playerNum === "player-1" ? "player-2" : "player-1";
+  const opponent = myInfo.gameInfo.playerNum === 'player-1' ? 'player-2' : 'player-1';
 
   if (me) {
     return (
@@ -75,7 +74,7 @@ const Who = styled.div<{ isMe: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(prop) => (prop.isMe ? "blue" : "red")};
+  color: ${prop => (prop.isMe ? 'blue' : 'red')};
   font-weight: 700;
 `;
 const Info = styled.div`
@@ -104,5 +103,5 @@ const Rate = styled.div`
   gap: 10px;
 `;
 const Span = styled.span<{ isWin: boolean }>`
-  color: ${(prop) => (prop.isWin ? "blue" : "red")};
+  color: ${prop => (prop.isWin ? 'blue' : 'red')};
 `;

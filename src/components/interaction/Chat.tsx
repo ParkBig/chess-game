@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { ChatList } from "../../types/interface";
-import { socket } from "../../utils/socketIo";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { ChatList } from '../../types/interface';
+import { socket } from '../../utils/socketIo';
+import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
-import chatBGImg from "../../assets/background/chatBGImg.png";
+import chatBGImg from '../../assets/background/chatBGImg.png';
 
 const Chat = () => {
   const { roomName } = useParams();
@@ -15,34 +15,34 @@ const Chat = () => {
   const sendMessage = () => {
     const { msg } = getValues();
     const newChat = { me: true, chat: msg, time: Date.now() };
-    setChatList((prev) => [...prev, newChat]);
+    setChatList(prev => [...prev, newChat]);
 
     const sendChat = { ...newChat, me: false };
-    socket.emit("send_msg", { roomName, sendChat });
+    socket.emit('send_msg', { roomName, sendChat });
 
-    setValue("msg", "");
+    setValue('msg', '');
   };
 
   useEffect(() => {
-    socket.on("get_msg", (getMsg) => {
-      setChatList((prev) => [...prev, getMsg]);
+    socket.on('get_msg', getMsg => {
+      setChatList(prev => [...prev, getMsg]);
     });
 
     return () => {
-      socket.off("get_msg");
+      socket.off('get_msg');
     };
   }, []);
   return (
     <Wrap>
       <UpperChatList>
-        {chatList.map((chat) => (
+        {chatList.map(chat => (
           <Chatting key={chat.time} me={chat.me}>
             {chat.chat}
           </Chatting>
         ))}
       </UpperChatList>
       <Form onSubmit={handleSubmit(sendMessage)}>
-        <Input {...register("msg")} placeholder="send message" />
+        <Input {...register('msg')} placeholder="send message" />
       </Form>
     </Wrap>
   );
@@ -71,7 +71,7 @@ const UpperChatList = styled.div`
   position: relative;
 
   ::before {
-    content: "";
+    content: '';
     background-image: url(${chatBGImg});
     background-size: cover;
     opacity: 0.6;
@@ -87,8 +87,8 @@ const Chatting = styled.div<{ me: boolean }>`
   border: 1px solid black;
   border-radius: 8px;
   padding: 10px;
-  margin-left: ${(prop) => (prop.me ? "auto" : "10px")};
-  margin-right: ${(prop) => (prop.me ? "10px" : "auto")};
+  margin-left: ${prop => (prop.me ? 'auto' : '10px')};
+  margin-right: ${prop => (prop.me ? '10px' : 'auto')};
   word-wrap: break-word;
   text-align: center;
   position: relative;

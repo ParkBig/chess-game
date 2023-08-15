@@ -1,23 +1,16 @@
-import { Board } from "../types/interface";
+import { Board } from '../types/interface';
 
-const pawnAlgorithm = (
-  pickedBlock: Board,
-  pickedIndex: number,
-  board: Board[]
-) => {
+const pawnAlgorithm = (pickedBlock: Board, pickedIndex: number, board: Board[]) => {
   const canMoveArea: number[] = [];
 
-  if (pickedBlock.chessColor === "white") {
+  if (pickedBlock.chessColor === 'white') {
     if (!board[pickedIndex - 8].chessmenType) {
       canMoveArea.push(pickedIndex - 8);
       if (!board[pickedIndex - 16].chessmenType && pickedBlock.row === 7) {
         canMoveArea.push(pickedIndex - 16);
       }
     }
-    if (
-      board[pickedIndex - 9].chessColor === "black" ||
-      board[pickedIndex - 7].chessColor === "black"
-    ) {
+    if (board[pickedIndex - 9].chessColor === 'black' || board[pickedIndex - 7].chessColor === 'black') {
       if (
         pickedIndex === 8 ||
         pickedIndex === 16 ||
@@ -26,7 +19,7 @@ const pawnAlgorithm = (
         pickedIndex === 40 ||
         pickedIndex === 48
       ) {
-        if (board[pickedIndex - 7].chessColor === "black") {
+        if (board[pickedIndex - 7].chessColor === 'black') {
           canMoveArea.push(pickedIndex - 7);
         }
       }
@@ -38,31 +31,28 @@ const pawnAlgorithm = (
         pickedIndex === 47 ||
         pickedIndex === 55
       ) {
-        if (board[pickedIndex - 9].chessColor === "black") {
+        if (board[pickedIndex - 9].chessColor === 'black') {
           canMoveArea.push(pickedIndex - 9);
         }
       } else {
-        if (board[pickedIndex - 9].chessColor === "black") {
+        if (board[pickedIndex - 9].chessColor === 'black') {
           canMoveArea.push(pickedIndex - 9);
         }
-        if (board[pickedIndex - 7].chessColor === "black") {
+        if (board[pickedIndex - 7].chessColor === 'black') {
           canMoveArea.push(pickedIndex - 7);
         }
       }
     }
   }
 
-  if (pickedBlock.chessColor === "black") {
+  if (pickedBlock.chessColor === 'black') {
     if (!board[pickedIndex + 8].chessmenType) {
       canMoveArea.push(pickedIndex + 8);
       if (!board[pickedIndex + 16].chessmenType && pickedBlock.row === 2) {
         canMoveArea.push(pickedIndex + 16);
       }
     }
-    if (
-      board[pickedIndex + 9].chessColor === "white" ||
-      board[pickedIndex + 7].chessColor === "white"
-    ) {
+    if (board[pickedIndex + 9].chessColor === 'white' || board[pickedIndex + 7].chessColor === 'white') {
       if (
         pickedIndex === 8 ||
         pickedIndex === 16 ||
@@ -71,7 +61,7 @@ const pawnAlgorithm = (
         pickedIndex === 40 ||
         pickedIndex === 48
       ) {
-        if (board[pickedIndex + 9].chessColor === "white") {
+        if (board[pickedIndex + 9].chessColor === 'white') {
           canMoveArea.push(pickedIndex - 9);
         }
       }
@@ -83,14 +73,14 @@ const pawnAlgorithm = (
         pickedIndex === 47 ||
         pickedIndex === 55
       ) {
-        if (board[pickedIndex + 7].chessColor === "white") {
+        if (board[pickedIndex + 7].chessColor === 'white') {
           canMoveArea.push(pickedIndex + 7);
         }
       } else {
-        if (board[pickedIndex + 9].chessColor === "white") {
+        if (board[pickedIndex + 9].chessColor === 'white') {
           canMoveArea.push(pickedIndex + 9);
         }
-        if (board[pickedIndex + 7].chessColor === "white") {
+        if (board[pickedIndex + 7].chessColor === 'white') {
           canMoveArea.push(pickedIndex + 7);
         }
       }

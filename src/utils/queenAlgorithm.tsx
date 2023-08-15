@@ -1,12 +1,8 @@
-import { Board } from "../types/interface";
-import bishopAlgorithm from "./bishopAlgorithm";
-import rookAlgorithm from "./rookAlgorithm";
+import { Board } from '../types/interface';
+import bishopAlgorithm from './bishopAlgorithm';
+import rookAlgorithm from './rookAlgorithm';
 
-const queenAlgorithm = (
-  pickedBlock: Board,
-  pickedIndex: number,
-  board: Board[]
-) => {
+const queenAlgorithm = (pickedBlock: Board, pickedIndex: number, board: Board[]) => {
   const canMoveArea: number[] = [];
 
   canMoveArea.push(...rookAlgorithm(pickedBlock, pickedIndex, board));

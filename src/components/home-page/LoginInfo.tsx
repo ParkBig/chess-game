@@ -1,25 +1,19 @@
-import styled from "styled-components";
-import useUserState from "../../store/useUserState";
+import styled from 'styled-components';
+import useUserState from '../../store/useUserState';
 
 const LoginInfo = () => {
   const { myInfo } = useUserState();
 
   return (
     <Wrap>
-      <Id>
-        {myInfo.loginInfo.nickname}
-      </Id>
+      <Id>{myInfo.loginInfo.nickname}</Id>
       <Rate>
-        <Span isWin={true}>
-          win: {myInfo.loginInfo.win}
-        </Span>
-        <Span isWin={false}>
-          lose: {myInfo.loginInfo.lose}  
-        </Span>
+        <Span isWin={true}>win: {myInfo.loginInfo.win}</Span>
+        <Span isWin={false}>lose: {myInfo.loginInfo.lose}</Span>
       </Rate>
     </Wrap>
-  )
-}
+  );
+};
 
 export default LoginInfo;
 
@@ -51,5 +45,5 @@ const Rate = styled.div`
   gap: 10px;
 `;
 const Span = styled.span<{ isWin: boolean }>`
-  color: ${prop => prop.isWin ? "blue" : "red"}
+  color: ${prop => (prop.isWin ? 'blue' : 'red')};
 `;

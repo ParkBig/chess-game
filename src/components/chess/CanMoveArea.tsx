@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { socket } from "../../utils/socketIo";
-import { useParams } from "react-router-dom";
-import useGameState from "../../store/useGameState";
-import useBoardList from "../../store/useBoardList";
+import styled from 'styled-components';
+import { socket } from '../../utils/socketIo';
+import { useParams } from 'react-router-dom';
+import useGameState from '../../store/useGameState';
+import useBoardList from '../../store/useBoardList';
 
 const CanMoveArea = ({ index }: { index: number }) => {
   const { roomName } = useParams();
@@ -10,7 +10,7 @@ const CanMoveArea = ({ index }: { index: number }) => {
   const { chessMove } = useBoardList();
 
   const moveTo = () => {
-    socket.emit("request-move", { roomName, targetIndex: index }, chessMove);
+    socket.emit('request-move', { roomName, targetIndex: index }, chessMove);
     setNowTurn();
   };
 

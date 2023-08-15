@@ -1,18 +1,11 @@
-import { Board } from "../types/interface";
+import { Board } from '../types/interface';
 
-const bishopAlgorithm = (
-  pickedBlock: Board,
-  pickedIndex: number,
-  board: Board[]
-) => {
+const bishopAlgorithm = (pickedBlock: Board, pickedIndex: number, board: Board[]) => {
   const canMoveArea: number[] = [];
 
-  if (pickedBlock.chessColor === "white") {
+  if (pickedBlock.chessColor === 'white') {
     for (let i = 1; i < pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex - 8 * i - i]?.chessmenType ||
-        board[pickedIndex - 8 * i - i]?.chessColor === "black"
-      ) {
+      if (!board[pickedIndex - 8 * i - i]?.chessmenType || board[pickedIndex - 8 * i - i]?.chessColor === 'black') {
         if (pickedBlock?.row - i === board[pickedIndex - 8 * i - i]?.row) {
           canMoveArea.push(pickedIndex - 8 * i - i);
         }
@@ -22,10 +15,7 @@ const bishopAlgorithm = (
       }
     }
     for (let i = 1; i < pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex - 8 * i + i]?.chessmenType ||
-        board[pickedIndex - 8 * i + i]?.chessColor === "black"
-      ) {
+      if (!board[pickedIndex - 8 * i + i]?.chessmenType || board[pickedIndex - 8 * i + i]?.chessColor === 'black') {
         if (pickedBlock?.row - i === board[pickedIndex - 8 * i + i]?.row) {
           canMoveArea.push(pickedIndex - 8 * i + i);
         }
@@ -35,10 +25,7 @@ const bishopAlgorithm = (
       }
     }
     for (let i = 1; i < 9 - pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex + 8 * i - i]?.chessmenType ||
-        board[pickedIndex + 8 * i - i]?.chessColor === "black"
-      ) {
+      if (!board[pickedIndex + 8 * i - i]?.chessmenType || board[pickedIndex + 8 * i - i]?.chessColor === 'black') {
         if (pickedBlock?.row + i === board[pickedIndex + 8 * i - i]?.row) {
           canMoveArea.push(pickedIndex + 8 * i - i);
         }
@@ -48,10 +35,7 @@ const bishopAlgorithm = (
       }
     }
     for (let i = 1; i < 9 - pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex + 8 * i + i]?.chessmenType ||
-        board[pickedIndex + 8 * i + i]?.chessColor === "black"
-      ) {
+      if (!board[pickedIndex + 8 * i + i]?.chessmenType || board[pickedIndex + 8 * i + i]?.chessColor === 'black') {
         if (pickedBlock?.row + i === board[pickedIndex + 8 * i + i]?.row) {
           canMoveArea.push(pickedIndex + 8 * i + i);
         }
@@ -62,12 +46,9 @@ const bishopAlgorithm = (
     }
   }
 
-  if (pickedBlock.chessColor === "black") {
+  if (pickedBlock.chessColor === 'black') {
     for (let i = 1; i < pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex - 8 * i - i]?.chessmenType ||
-        board[pickedIndex - 8 * i - i]?.chessColor === "white"
-      ) {
+      if (!board[pickedIndex - 8 * i - i]?.chessmenType || board[pickedIndex - 8 * i - i]?.chessColor === 'white') {
         if (pickedBlock?.row - i === board[pickedIndex - 8 * i - i]?.row) {
           canMoveArea.push(pickedIndex - 8 * i - i);
         }
@@ -77,10 +58,7 @@ const bishopAlgorithm = (
       }
     }
     for (let i = 1; i < pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex - 8 * i + i]?.chessmenType ||
-        board[pickedIndex - 8 * i + i]?.chessColor === "white"
-      ) {
+      if (!board[pickedIndex - 8 * i + i]?.chessmenType || board[pickedIndex - 8 * i + i]?.chessColor === 'white') {
         if (pickedBlock?.row - i === board[pickedIndex - 8 * i + i]?.row) {
           canMoveArea.push(pickedIndex - 8 * i + i);
         }
@@ -90,10 +68,7 @@ const bishopAlgorithm = (
       }
     }
     for (let i = 1; i < 9 - pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex + 8 * i - i]?.chessmenType ||
-        board[pickedIndex + 8 * i - i]?.chessColor === "white"
-      ) {
+      if (!board[pickedIndex + 8 * i - i]?.chessmenType || board[pickedIndex + 8 * i - i]?.chessColor === 'white') {
         if (pickedBlock?.row + i === board[pickedIndex + 8 * i - i]?.row) {
           canMoveArea.push(pickedIndex + 8 * i - i);
         }
@@ -103,10 +78,7 @@ const bishopAlgorithm = (
       }
     }
     for (let i = 1; i < 9 - pickedBlock.row; i++) {
-      if (
-        !board[pickedIndex + 8 * i + i]?.chessmenType ||
-        board[pickedIndex + 8 * i + i]?.chessColor === "white"
-      ) {
+      if (!board[pickedIndex + 8 * i + i]?.chessmenType || board[pickedIndex + 8 * i + i]?.chessColor === 'white') {
         if (pickedBlock?.row + i === board[pickedIndex + 8 * i + i]?.row) {
           canMoveArea.push(pickedIndex + 8 * i + i);
         }

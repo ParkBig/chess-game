@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import useBoardList from "../../../store/useBoardList";
-import { useNavigate, useParams } from "react-router-dom";
-import useUserState from "../../../store/useUserState";
-import useGameState from "../../../store/useGameState";
-import { socket } from "../../../utils/socketIo";
-import boardList from "../../../utils/boardList";
+import styled from 'styled-components';
+import useBoardList from '../../../store/useBoardList';
+import { useNavigate, useParams } from 'react-router-dom';
+import useUserState from '../../../store/useUserState';
+import useGameState from '../../../store/useGameState';
+import { socket } from '../../../utils/socketIo';
+import boardList from '../../../utils/boardList';
 
-import craftChess from "../../../assets/background/craftChess.png";
-import reGameBg from "../../../assets/background/reGameBg.png";
-import ggBg from "../../../assets/background/ggBg.png";
+import craftChess from '../../../assets/background/craftChess.png';
+import reGameBg from '../../../assets/background/reGameBg.png';
+import ggBg from '../../../assets/background/ggBg.png';
 
 const EndAlerts = () => {
   const navigate = useNavigate();
@@ -18,10 +18,10 @@ const EndAlerts = () => {
   const { setIsStart, setNowTurn } = useGameState();
 
   const reGame = () => {
-    socket.emit("leave-or-initialize-room", { roomName, state: "initialize" });
-    setNowTurn("player-1");
-    setIsStart("false");
-    setMyReady("false");
+    socket.emit('leave-or-initialize-room', { roomName, state: 'initialize' });
+    setNowTurn('player-1');
+    setIsStart('false');
+    setMyReady('false');
     setGotCha();
     if (myInfo.gameInfo.playerNum) {
       const boardSetting = boardList(myInfo.gameInfo.playerNum);
@@ -30,12 +30,8 @@ const EndAlerts = () => {
   };
 
   const goHome = () => {
-    socket.emit(
-      "leave-or-initialize-room",
-      { roomName, state: "leave" },
-      navigate
-    );
-    setIsStart("false");
+    socket.emit('leave-or-initialize-room', { roomName, state: 'leave' }, navigate);
+    setIsStart('false');
     setMyIsInGame(false);
     setGotCha();
   };
@@ -43,7 +39,7 @@ const EndAlerts = () => {
   return (
     <>
       <MatchResult>
-        {gotcha.caughtChessColor === "black" ? (
+        {gotcha.caughtChessColor === 'black' ? (
           <>
             <UpperResult>
               <Result fontSize="large">검은색 킹이 잡혔습니다..!</Result>
@@ -108,7 +104,7 @@ const UpperResult = styled.div`
 `;
 const Result = styled.span<{ fontSize: string }>`
   text-align: center;
-  font-size: ${(prop) => prop.fontSize};
+  font-size: ${prop => prop.fontSize};
 `;
 const Rematch = styled.div`
   width: 400px;
@@ -123,8 +119,8 @@ const RematchBtn = styled.button<{ bgColor: string }>`
   width: 130px;
   height: 50px;
   border-radius: 10px;
-  background-color: ${(prop) => prop.bgColor};
-  background-image: url(${(prop) => prop.bgColor === "green" ? reGameBg : ggBg});
+  background-color: ${prop => prop.bgColor};
+  background-image: url(${prop => (prop.bgColor === 'green' ? reGameBg : ggBg)});
   background-size: cover;
   color: #d2dae2;
   font-size: var(--size-5);

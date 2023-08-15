@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { socket } from "../../utils/socketIo";
-import styled from "styled-components";
-import Login from "./Login";
-import useUserState from "../../store/useUserState";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { socket } from '../../utils/socketIo';
+import styled from 'styled-components';
+import Login from './Login';
+import useUserState from '../../store/useUserState';
 
 const Match = () => {
   const navigate = useNavigate();
@@ -12,13 +12,13 @@ const Match = () => {
 
   const enterTheRoom = () => {
     const { roomName } = getValues();
-    socket.emit("enterRoom", { roomName, loginInfo: myInfo.loginInfo }, (canGo: boolean) => {
+    socket.emit('enterRoom', { roomName, loginInfo: myInfo.loginInfo }, (canGo: boolean) => {
       if (canGo) {
         navigate(`room/${roomName}`);
         setMyIsInGame(true);
       } else {
-        alert("정원을 초과 했습니다.");
-        setValue("roomName", "");
+        alert('정원을 초과 했습니다.');
+        setValue('roomName', '');
       }
     });
   };
@@ -30,8 +30,8 @@ const Match = () => {
         <Form isMatch={true} onSubmit={handleSubmit(enterTheRoom)}>
           <Input
             isMatch={true}
-            {...register("roomName", {
-              required: true
+            {...register('roomName', {
+              required: true,
             })}
             placeholder="Room Name"
           />
@@ -76,14 +76,14 @@ const Form = styled.form<{ isMatch: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${(prop) => (prop.isMatch ? "10px 0 30px 0" : "15px")};
-  border-radius: ${(prop) => (prop.isMatch ? "15px" : "none")};
-  border-bottom: ${(prop) => (prop.isMatch ? "2px solid gray" : "none")};
+  padding: ${prop => (prop.isMatch ? '10px 0 30px 0' : '15px')};
+  border-radius: ${prop => (prop.isMatch ? '15px' : 'none')};
+  border-bottom: ${prop => (prop.isMatch ? '2px solid gray' : 'none')};
 `;
 const Input = styled.input<{ isMatch: boolean }>`
-  height: ${(prop) => (prop.isMatch ? "60px" : "30px")};
+  height: ${prop => (prop.isMatch ? '60px' : '30px')};
   width: 80%;
   border-radius: 10px;
   text-align: center;
-  font-size: ${(prop) => (prop.isMatch ? "var(--size-5)" : "var(--size-4)")};
+  font-size: ${prop => (prop.isMatch ? 'var(--size-5)' : 'var(--size-4)')};
 `;

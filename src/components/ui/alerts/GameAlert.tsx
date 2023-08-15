@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import useGameState from "../../../store/useGameState";
+import styled from 'styled-components';
+import useGameState from '../../../store/useGameState';
 
-import alertImg from "../../../assets/background/alertImg.png";
+import alertImg from '../../../assets/background/alertImg.png';
 
 const GameAlert = () => {
   const { gameAlert } = useGameState();

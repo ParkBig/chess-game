@@ -1,11 +1,11 @@
-import { BoardsBlock } from "../../types/interface";
-import React from "react";
-import styled from "styled-components";
-import useBoardList from "../../store/useBoardList";
-import useUserState from "../../store/useUserState";
-import useGameState from "../../store/useGameState";
-import Chessman from "./Chessman";
-import CanMoveArea from "./CanMoveArea";
+import { BoardsBlock } from '../../types/interface';
+import React from 'react';
+import styled from 'styled-components';
+import useBoardList from '../../store/useBoardList';
+import useUserState from '../../store/useUserState';
+import useGameState from '../../store/useGameState';
+import Chessman from './Chessman';
+import CanMoveArea from './CanMoveArea';
 
 const BoardBlock = ({ boardBlock, index }: BoardsBlock) => {
   const { myInfo } = useUserState();
@@ -17,9 +17,7 @@ const BoardBlock = ({ boardBlock, index }: BoardsBlock) => {
       {isBlockPick.isPick && canMoveArea.includes(index) && myInfo.gameInfo.playerNum === nowTurn && (
         <CanMoveArea index={index} />
       )}
-      {boardBlock.chessmenType && (
-        <Chessman boardBlock={boardBlock} index={index} />
-      )}
+      {boardBlock.chessmenType && <Chessman boardBlock={boardBlock} index={index} />}
     </Area>
   );
 };
@@ -33,7 +31,7 @@ const Area = styled.div<{ isColor: boolean }>`
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  background-color: ${(prop) => (prop.isColor ? "#353b48" : "white")};
+  background-color: ${prop => (prop.isColor ? '#353b48' : 'white')};
   position: relative;
   z-index: 100;
 `;

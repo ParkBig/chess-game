@@ -1,16 +1,14 @@
-import styled from "styled-components";
-import useBoardList from "../../../store/useBoardList";
+import styled from 'styled-components';
+import useBoardList from '../../../store/useBoardList';
 
-import alertImg from "../../../assets/background/alertImg.png";
+import alertImg from '../../../assets/background/alertImg.png';
 
 const CatchAlert = () => {
   const { gotcha } = useBoardList();
 
   return (
     <>
-      <Modal>
-        {`${gotcha.caughtChessColor}의 ${gotcha.chessmenType}이 잡혔습니다!`}
-      </Modal>
+      <Modal>{`${gotcha.caughtChessColor}의 ${gotcha.chessmenType}이 잡혔습니다!`}</Modal>
     </>
   );
 };

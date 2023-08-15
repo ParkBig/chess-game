@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import Match from "../components/home-page/Match";
-import { Helmet } from "react-helmet-async";
+import styled from 'styled-components';
+import Match from '../components/home-page/Match';
+import { Helmet } from 'react-helmet-async';
 
-import chessBGImg from "../assets/background/chessBGImg.png";
+import chessBGImg from '../assets/background/chessBGImg.png';
 
 const FindRoomPage = () => {
   return (

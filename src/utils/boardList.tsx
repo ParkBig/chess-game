@@ -1,8 +1,8 @@
-import { Board, ChessColor, Chessmen, Player } from "../types/interface";
+import { Board, ChessColor, Chessmen, Player } from '../types/interface';
 
 const boardList = (player: Player) => {
   const setMe = (i: number, player: Player): boolean | null => {
-    if (player === "player-1") {
+    if (player === 'player-1') {
       if (i === 0 || i === 1) {
         return false;
       }
@@ -23,32 +23,32 @@ const boardList = (player: Player) => {
 
   const setChessmen = (i: number, j: number): Chessmen => {
     if ((j === 0 || j === 7) && (i === 0 || i === 7)) {
-      return "rook";
+      return 'rook';
     }
     if ((j === 1 || j === 6) && (i === 0 || i === 7)) {
-      return "knight";
+      return 'knight';
     }
     if ((j === 2 || j === 5) && (i === 0 || i === 7)) {
-      return "bishop";
+      return 'bishop';
     }
     if (j === 3 && (i === 0 || i === 7)) {
-      return "queen";
+      return 'queen';
     }
     if (j === 4 && (i === 0 || i === 7)) {
-      return "king";
+      return 'king';
     }
     if (i === 1 || i === 6) {
-      return "pawn";
+      return 'pawn';
     }
     return null;
   };
 
   const setChessColor = (i: number): ChessColor => {
     if (i === 0 || i === 1) {
-      return "black";
+      return 'black';
     }
     if (i === 6 || i === 7) {
-      return "white";
+      return 'white';
     }
     return null;
   };
@@ -60,7 +60,7 @@ const boardList = (player: Player) => {
       board.push({
         row: i + 1,
         col: String.fromCharCode(97 + j),
-        color: (i + j) % 2 == 0 ? false : true,
+        color: (i + j) % 2 === 0 ? false : true,
         isMyChessmen: setMe(i, player),
         chessmenType: setChessmen(i, j),
         chessColor: setChessColor(i),
