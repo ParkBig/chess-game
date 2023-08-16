@@ -6,19 +6,7 @@ import useBoardList from 'store/useBoardList';
 import siftChessmenToMove from 'utils/siftChessmenToMove';
 import { socket } from 'utils/socketIo';
 import { css } from '@emotion/react';
-
-import whiteBishop from 'assets/chessman/white-bishop.png';
-import whiteKing from 'assets/chessman/white-king.png';
-import whiteKnight from 'assets/chessman/white-knight.png';
-import whitePawn from 'assets/chessman/white-pawn.png';
-import whiteQueen from 'assets/chessman/white-queen.png';
-import whiteRook from 'assets/chessman/white-rook.png';
-import blackBishop from 'assets/chessman/black-bishop.png';
-import blackKing from 'assets/chessman/black-king.png';
-import blackKnight from 'assets/chessman/black-knight.png';
-import blackPawn from 'assets/chessman/black-pawn.png';
-import blackQueen from 'assets/chessman/black-queen.png';
-import blackRook from 'assets/chessman/black-rook.png';
+import sortChess from 'utils/sortChess';
 
 interface ChessmanImgProps {
   myChess: boolean | null;
@@ -29,6 +17,8 @@ export default function Chessman({ boardBlock, index }: BoardsBlock) {
   const { myInfo } = useUserState();
   const { nowTurn, isStart, setGameAlert } = useGameState();
   const { board, setIsBlockPick, setCanMoveArea } = useBoardList();
+
+  const chessImg = sortChess(boardBlock.chessColor, boardBlock.chessmenType);
 
   const blockPick = () => {
     if (!isStart) {
@@ -41,43 +31,7 @@ export default function Chessman({ boardBlock, index }: BoardsBlock) {
     }
   };
 
-  return (
-    <img
-      css={chessmanImg({ myChess: boardBlock.isMyChessmen })}
-      onClick={blockPick}
-      src={
-        boardBlock.chessColor === 'white'
-          ? boardBlock.chessmenType === 'bishop'
-            ? whiteBishop
-            : boardBlock.chessmenType === 'king'
-            ? whiteKing
-            : boardBlock.chessmenType === 'knight'
-            ? whiteKnight
-            : boardBlock.chessmenType === 'pawn'
-            ? whitePawn
-            : boardBlock.chessmenType === 'queen'
-            ? whiteQueen
-            : boardBlock.chessmenType === 'rook'
-            ? whiteRook
-            : null
-          : boardBlock.chessColor === 'black'
-          ? boardBlock.chessmenType === 'bishop'
-            ? blackBishop
-            : boardBlock.chessmenType === 'king'
-            ? blackKing
-            : boardBlock.chessmenType === 'knight'
-            ? blackKnight
-            : boardBlock.chessmenType === 'pawn'
-            ? blackPawn
-            : boardBlock.chessmenType === 'queen'
-            ? blackQueen
-            : boardBlock.chessmenType === 'rook'
-            ? blackRook
-            : null
-          : null
-      }
-    />
-  );
+  return <img css={chessmanImg({ myChess: boardBlock.isMyChessmen })} onClick={blockPick} src={chessImg} />;
 }
 
 const chessmanImg = (props: ChessmanImgProps) => css`
